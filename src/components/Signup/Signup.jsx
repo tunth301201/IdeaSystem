@@ -1,11 +1,10 @@
-import { React, useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
-import "./login.css";
+import { React, useState } from "react";
+import './signup.css';
 
-const Login = () => {
+const SignUp = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -15,18 +14,25 @@ const Login = () => {
     setPassword(event.target.value);
   };
 
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    // hàm gửi biểu mẫu 
+    // hàm gửi biểu mẫu
   };
 
   return (
     <div>
-      <h1>Login page</h1>
-      <form onSubmit={handleSubmit} className="login-form">
+      <form onSubmit={handleSubmit} className="signup-form">
         <label>
           Username:
           <input type="text" value={username} onChange={handleUsernameChange} />
+        </label>
+        <label>
+          Email:
+          <input type="email" value={email} onChange={handleEmailChange} />
         </label>
         <label>
           Password:
@@ -36,18 +42,10 @@ const Login = () => {
             onChange={handlePasswordChange}
           />
         </label>
-        <button type="submit">
-          <Link to="/home">Login</Link>
-        </button>
-        <div>
-          Don't have an account?
-          <a id="submit">
-            <Link to="/signup">Sign Up</Link>
-          </a>
-        </div>
+        <button type="submit">Sign Up</button>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default SignUp;
