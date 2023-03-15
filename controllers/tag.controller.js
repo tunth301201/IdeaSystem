@@ -35,9 +35,27 @@ const createTag = async (req, res) => {
       res.status(500).json({ message: 'Server error' });
     }
   };
+// Delete a tag by ID
+const deleteTag = async (req, res, tagID) => {
+  try {
+    // Check if user exists
+    const existingTag = await Tag.findById(tagID);
+    if (!existingTag) {
+      return res.status(404).json({ message: 'Tag not found' });
+    }
 
+    // Delete user from database
+    await existingTag.remove();
+
+    res.json({ message: 'Tag deleted' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
 
 module.exports={
     getTags: getTags,
-    createTag: createTag
+    createTag: createTag,
+    deleteTag: deleteTag
 }
