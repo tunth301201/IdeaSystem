@@ -8,4 +8,5 @@ router.post('/', tagController.createTag);
 router.get('/', tagController.getTags);
 
 router.delete('/:id', tagController.deleteTag);
+router.put('/:id', tagController.updateTag);
 module.exports = router;

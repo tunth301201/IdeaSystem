@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const usersRoute = require('./routes/user.route');
 const tagsRoute = require('./routes/tag.route');
+const commentsRoute = require('./routes/comment.route');
 
 mongoose.connect('mongodb+srv://group1940:19401940@cluster0.txsa0qr.mongodb.net/IdeaSystem?retryWrites=true&w=majority', {
   useNewUrlParser: true,
@@ -19,6 +20,8 @@ app.use(express.json());
 app.use('/users', usersRoute);
 // Route middleware for tags
 app.use('/tags', tagsRoute);
+app.use('/comments', commentsRoute);
+
 
 
 // Start the server
