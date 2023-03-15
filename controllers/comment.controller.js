@@ -15,7 +15,10 @@ const getComment = async (req, res) => {
  // Create a new comment
 const createComment = async (req, res) => {
     try {
-      const { user_id, isAnonymity, comment, reply} = req.body;
+      const {isAnonymity, comment, reply} = req.body;
+
+      const user_id = req.params.id;
+      
       // Create new comment object
       const newComment = new Comment({
         user_id,
@@ -32,8 +35,23 @@ const createComment = async (req, res) => {
       res.status(500).json({ message: 'Server error' });
     }
   };
+  // Delete a comment by ID
+const deleteComment = async (req, res) => {
+    try {
+      // Check if user exists
+      const existingComment = await Comment.findByIdAndDelete(req.params.id).exec();
+      if (!existingComment) {
+        return res.status(404).json({ message: 'Comment not found' });
+      }
+      res.json({ message: 'Delete comment succesfull ' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  };
 
 module.exports={
     getComment: getComment,
-    createComment:createComment
+    createComment:createComment,
+    deleteComment:deleteComment
 }
