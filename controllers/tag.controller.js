@@ -66,6 +66,8 @@ const updateTag = async (req, res) => {
     existingTag.start_dateOfTag = start_dateOfTag;
     existingTag.end_dateOfTag = end_dateOfTag;
     existingTag.end_dateOfIdea = end_dateOfIdea;
+
+    await existingTag.save();
     res.json(existingTag);
   } catch (error) {
     console.error(error);

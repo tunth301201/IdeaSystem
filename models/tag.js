@@ -3,25 +3,25 @@ const mongoose = require('mongoose');
 const tagSchema = new mongoose.Schema({
   subject: {
     type: String,
-    required: true,
+    required: false,
     trim: true
   },
   description: {
     type: String,
-    required: true,
+    required: false,
     trim: true
   },
   start_dateOfTag: {
     type: Date,
-    required: true,
+    required: false,
   },
   end_dateOfTag: {
     type: Date,
-    required: true,
+    required: false,
   },
   end_dateOfIdea: {
     type: Date,
-    required: true,
+    required: false,
   }
 }, { timestamps: true });
 
