@@ -44,7 +44,7 @@ const deleteTag = async (req, res, tagID) => {
       return res.status(404).json({ message: 'Tag not found' });
     }
 
-    // Delete user from database
+    // Delete tag from database
     await existingTag.remove();
 
     res.json({ message: 'Tag deleted' });
