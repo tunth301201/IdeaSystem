@@ -1,4 +1,6 @@
 const Comment = require('../models/Comment');
+const User = require('../models/User');
+
 
 // Get all comments
 const getComment = async (req, res) => {
@@ -16,9 +18,7 @@ const getComment = async (req, res) => {
 const createComment = async (req, res) => {
     try {
       const {isAnonymity, comment, reply} = req.body;
-
-      const user_id = req.params.id;
-      
+      const user_id=req.params.id
       // Create new comment object
       const newComment = new Comment({
         user_id,
@@ -49,9 +49,34 @@ const deleteComment = async (req, res) => {
       res.status(500).json({ message: 'Server error' });
     }
   };
+  const updateComment = async (req, res) => {
+    try {
+      const {user_id, isAnonymity, comment,reply} = req.body;
+  
+      // Check if comment exists
+      const existingComment = await Comment.findByIdAndUpdate(req.params.id).exec();
+      if (!existingComment) {
+        return res.status(404).json({ message: 'Tag not found' });
+      }
+  
+      // Update comment object
+      existingComment.user_id = user_id;
+      existingComment.isAnonymity = isAnonymity;
+      existingComment.comment = comment;
+      existingComment.reply = reply;
+  
+      await existingComment.save();
+      res.json(existingComment);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  };
 
 module.exports={
     getComment: getComment,
     createComment:createComment,
-    deleteComment:deleteComment
+    deleteComment:deleteComment,
+    updateComment:updateComment
+
 }

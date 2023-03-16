@@ -16,7 +16,7 @@ const getTags = async (req, res) => {
 // Create a new tag
 const createTag = async (req, res) => {
     try {
-      const { subject, description, start_dateOfTag, end_dateOfTag, end_dateOfIdea} = req.body;
+      const {subject, description, start_dateOfTag, end_dateOfTag, end_dateOfIdea} = req.body;
       // Create new tag object
       const newTag = new Tag({
         subject,
@@ -49,7 +49,17 @@ const deleteTag = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
-// Update user
+const getTag = async (req, res) => {
+  try {
+    const tag = await Tag.findById(req.params.id);
+
+    res.json(tag);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+// Update Tags
 const updateTag = async (req, res) => {
   try {
     const { subject, description, start_dateOfTag, end_dateOfTag, end_dateOfIdea } = req.body;
@@ -75,9 +85,12 @@ const updateTag = async (req, res) => {
   }
 };
 
+
 module.exports={
     getTags: getTags,
     createTag: createTag,
     deleteTag: deleteTag,
-    updateTag: updateTag
+    updateTag: updateTag,
+    getTag:getTag
+
 }

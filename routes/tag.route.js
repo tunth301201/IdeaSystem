@@ -3,10 +3,15 @@ const router = express.Router();
 const tagController = require('../controllers/tag.controller');
 
 // POST /tags
-router.post('/', tagController.createTag);
+router.route('/')
+.post(tagController.createTag)
 // GET /tags
-router.get('/', tagController.getTags);
-
-router.delete('/:id', tagController.deleteTag);
-router.put('/:id', tagController.updateTag);
+.get(tagController.getTags)
+// GET /tag
+router.route('/:id')
+.get(tagController.getTag)
+// GET /delete tag
+.delete(tagController.deleteTag)
+// GET /Edit tag
+.put(tagController.updateTag)
 module.exports = router;
