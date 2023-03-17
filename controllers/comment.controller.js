@@ -38,7 +38,7 @@ const createComment = async (req, res) => {
   // Delete a comment by ID
 const deleteComment = async (req, res) => {
     try {
-      // Check if user exists
+      // Check if comment exists
       const existingComment = await Comment.findByIdAndDelete(req.params.id).exec();
       if (!existingComment) {
         return res.status(404).json({ message: 'Comment not found' });
