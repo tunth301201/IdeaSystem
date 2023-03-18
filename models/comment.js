@@ -9,7 +9,7 @@ const commentSchema = new mongoose.Schema({
   },
   isAnonymity: {
     type: Boolean,
-    required: true,
+    default: false,
   },
   comment: {
     type: String,

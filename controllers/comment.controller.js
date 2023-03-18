@@ -1,5 +1,5 @@
-const Comment = require('../models/Comment');
-const User = require('../models/User');
+let Comment = require('../models/Comment');
+let Tag = require('../models/Tag');
 
 
 // Get all comments
@@ -14,22 +14,13 @@ const getComment = async (req, res) => {
       res.status(500).json({ message: 'Server error' });
     }
   };
- // Create a new comment
+ // Create a new comment  
 const createComment = async (req, res) => {
     try {
-      const {isAnonymity, comment, reply} = req.body;
-      const user_id=req.params.id
-      // Create new comment object
-      const newComment = new Comment({
-        user_id,
-        isAnonymity,
-        comment,
-        reply,
-      });
-  
+      const newComment =new Comment(req.body)
       // Save comment to database
-      await newComment.save();
-      res.status(201).json(newComment);
+     const saveComment = await newComment.save();
+      res.status(200).json(saveComment);
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Server error' });
@@ -74,9 +65,9 @@ const deleteComment = async (req, res) => {
   };
 
 module.exports={
-    getComment: getComment,
+  getComment:getComment,
     createComment:createComment,
     deleteComment:deleteComment,
-    updateComment:updateComment
+    updateComment:updateComment,
 
 }
