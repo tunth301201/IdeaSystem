@@ -15,18 +15,7 @@ const commentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  reply:[{
-   user_id:{
-   type:mongoose.Types.ObjectId,
-   ref: 'User'
-    },
-    reply_comment:{
-        type: String
-    },
-    reply_isAnonymity:{
-        type:Boolean
-    }
-  }]
+  
 }, { timestamps: true });
 
 const Comment = mongoose.model('Comment', commentSchema);
