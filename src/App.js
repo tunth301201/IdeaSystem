@@ -2,9 +2,9 @@ import "./App.css";
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./pages/Layout/Layout";
-import Login from "./components/Login/Login";
+import Login from "./pages/Login/Login";
 import Home from "./pages/Home/Home";
-import SignUp from "./components/Signup/Signup";
+import SignUp from "./pages/Signup/Signup";
 
 export default function App() {
   return (
@@ -12,9 +12,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login></Login>}></Route>
-          <Route path="/home" element={<Layout></Layout>}>
-            <Route index path="/home" element={<Home></Home>} />
-          </Route>
+          <Route path="/home" element={<Home></Home>}></Route>
           <Route path="/signup" element={<SignUp></SignUp>}></Route>
         </Routes>
       </BrowserRouter>
