@@ -1,23 +1,24 @@
-import "./App.css";
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Layout from "./pages/Layout/Layout";
-import Login from "./components/Login/Login";
-import Home from "./pages/Home/Home";
-import SignUp from "./components/Signup/Signup";
+import './App.css';
+import React from 'react';
+import theme from "./flowbite-theme.js";
+import { Flowbite } from "flowbite-react";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import DashboardPage from './pages/Dashboard/DashboardPage';
+import ProductPage from './pages/Product/ProductPage';
+import UserPage from './pages/User/UserPage';
 
 export default function App() {
   return (
-    <div className="App">
+    <Flowbite theme={{ theme }}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login></Login>}></Route>
-          <Route path="/home" element={<Layout></Layout>}>
-            <Route index path="/home" element={<Home></Home>} />
-          </Route>
-          <Route path="/signup" element={<SignUp></SignUp>}></Route>
+        
+          <Route path="/" index element={<DashboardPage />}/>
+          <Route path="/e-commerce/products" element={<ProductPage />} />
+          <Route path="/users/list" element={<UserPage />} />
+      
         </Routes>
       </BrowserRouter>
-    </div>
+    </Flowbite>
   );
 }
