@@ -18,16 +18,6 @@ export default function NavBar() {
               </Navbar.Brand>
             </div>
             <div className="flex items-center gap-3">
-              <iframe
-                height="30"
-                src="https://ghbtns.com/github-btn.html?user=themesberg&repo=flowbite-react-admin-dashboard&type=star&count=true&size=large"
-                title="GitHub"
-                width="90"
-                className="hidden sm:block"
-              />
-              <Button color="primary" href="https://flowbite.com/pro/">
-                Upgrade to Pro
-              </Button>
               <DarkThemeToggle />
             </div>
           </div>

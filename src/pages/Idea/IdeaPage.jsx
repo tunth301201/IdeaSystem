@@ -22,11 +22,11 @@ import {
 } from "react-icons/hi"
 import NavbarSidebarLayout from "../../layouts/NavBar-SideBar";
 import { Pagination } from "../User/UserPage";
-import AddProduct from "./AddProduct";
-import DeleteProduct from "./DeleteProduct";
-import EditProduct from "./EditProduct";
+import AddIdea from "./AddIdea";
+import DeleteIdea from "./DeleteIdea";
+import EditIdea from "./EditIdea";
   
-export default function ProductPage() {
+export default function IdeaPage() {
     return (
       <NavbarSidebarLayout isFooter={false}>
         <div className="block items-center justify-between border-b border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800 sm:flex">
@@ -81,7 +81,7 @@ export default function ProductPage() {
                 </a>
               </div>
               <div className="flex w-full items-center sm:justify-end">
-                <AddProduct />
+                <AddIdea /> 
               </div>
             </div>
           </div>
@@ -156,8 +156,8 @@ export default function ProductPage() {
             </Table.Cell>
             <Table.Cell className="space-x-2 whitespace-nowrap p-4">
               <div className="flex items-center gap-x-3">
-                <EditProduct />
-                <DeleteProduct />
+                <EditIdea />
+                <DeleteIdea />
               </div>
             </Table.Cell>
           </Table.Row>

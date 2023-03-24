@@ -1,11 +1,9 @@
-/* eslint-disable no-undef */
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./index.html",
+    "./public/index.html",
     "./node_modules/flowbite-react/lib/**/*.{js,ts}",
-    "./src/**/*.{ts,tsx}",
-  ],
+    "./src/**/*.{html,js,jsx}"],
   theme: {
     colors: {
       primary: {
@@ -70,4 +68,4 @@ module.exports = {
     extend: {},
   },
   plugins: [require("flowbite/plugin")],
-};
+}

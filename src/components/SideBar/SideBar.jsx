@@ -5,11 +5,10 @@ import {
   HiClipboard,
   HiCollection,
   HiInformationCircle,
-  HiLogin,
-  HiPencil,
   HiSearch,
-  HiShoppingBag,
   HiUsers,
+  HiLightBulb,
+  HiTag
 } from "react-icons/hi";
 
 export default function SideBar() {
@@ -46,15 +45,26 @@ export default function SideBar() {
                 Dashboard
               </Sidebar.Item>
               <Sidebar.Item
-                href="/e-commerce/products"
-                icon={HiShoppingBag}
+                href="/tags"
+                icon={HiTag}
                 className={
-                  "/e-commerce/products" === currentPage
+                  "/tags" === currentPage
                     ? "bg-gray-100 dark:bg-gray-700"
                     : ""
                 }
               >
-                Products
+                Tags
+              </Sidebar.Item>
+              <Sidebar.Item
+                href="/ideas"
+                icon={HiLightBulb}
+                className={
+                  "/ideas" === currentPage
+                    ? "bg-gray-100 dark:bg-gray-700"
+                    : ""
+                }
+              >
+                Idea
               </Sidebar.Item>
               <Sidebar.Item
                 href="/users/list"
@@ -66,12 +76,6 @@ export default function SideBar() {
                 }
               >
                 Users list
-              </Sidebar.Item>
-              <Sidebar.Item href="/authentication/sign-in" icon={HiLogin}>
-                Sign in
-              </Sidebar.Item>
-              <Sidebar.Item href="/authentication/sign-up" icon={HiPencil}>
-                Sign up
               </Sidebar.Item>
             </Sidebar.ItemGroup>
             <Sidebar.ItemGroup>
