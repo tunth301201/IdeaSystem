@@ -3,7 +3,7 @@ import React from 'react'
 export default function Footer() {
   return (
   <div>  
-    <div className="p-4 my-6 mx-4 bg-white rounded-lg shadow md:flex md:items-center md:justify-between md:p-6 xl:p-8 dark:bg-gray-800">
+    <div className="w-full p-4 mt-1 mx-4 bg-white rounded-lg shadow md:flex md:items-center md:justify-between md:p-6 xl:p-8 dark:bg-gray-800">
       <ul className="flex flex-wrap items-center mb-6 space-y-1 md:mb-0">
         <li><a href="#" className="mr-4 text-sm font-normal text-gray-500 hover:underline md:mr-6 dark:text-gray-400">Terms and conditions</a></li>
         <li><a href="#" className="mr-4 text-sm font-normal text-gray-500 hover:underline md:mr-6 dark:text-gray-400">Privacy Policy</a></li>
