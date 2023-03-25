@@ -1,11 +1,11 @@
 const { default: mongoose } = require('mongoose');
 const { Validator } = require('node-input-validator');
 let Comment = require('../models/Comment');
-let Idea = require('../models/Idea');
+const Idea = require('../models/Idea');
 // Get all comments
 const getComment = async (req, res) => {
     try {
-      // Retrieve all tags from database
+      // Retrieve all comments from database
       const comments = await Comment.find();
       res.json(comments);
     } catch (error) {
@@ -44,7 +44,7 @@ const createComment = async (req, res) => {
 				});
 				let commentData=await newCommentDocument.save();
 
-				await idea.updateOne(
+				await Idea.updateOne(
 					{_id:idea_id},
 					{
 						$push: { comment :commentData._id  } 
@@ -67,47 +67,112 @@ const createComment = async (req, res) => {
 	  		data:err
 	  	});
 	})
-
 }  
-  
   // Delete a comment by ID
-const deleteComment = async (req, res) => {
-    try {
-      // Check if comment exists
-      const existingComment = await Comment.findByIdAndDelete(req.params.id).exec();
-      if (!existingComment) {
-        return res.status(404).json({ message: 'Comment not found' });
-      }
-      res.json({ message: 'Delete comment succesfull ' });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Server error' });
-    }
-  };
-  const updateComment = async (req, res) => {
-    try {
-      const {user_id, isAnonymity, comment,reply} = req.body;
-  
-      // Check if comment exists
-      const existingComment = await Comment.findByIdAndUpdate(req.params.id).exec();
-      if (!existingComment) {
-        return res.status(404).json({ message: 'Tag not found' });
-      }
-  
-      // Update comment object
-      existingComment.user_id = user_id;
-      existingComment.isAnonymity = isAnonymity;
-      existingComment.comment = comment;
-      existingComment.reply = reply;
-  
-      await existingComment.save();
-      res.json(existingComment);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Server error' });
-    }
-  };
+const deleteComment =(req, res) => {
+	let comment_id=req.params.comment_id;
+	if(!mongoose.Types.ObjectId.isValid(comment_id)){
+		return res.status(400).send({
+	  		message:'Invalid comment id',
+	  		data:{}
+	  	});
+	}
+	Comment.findOne({_id:comment_id}).then(async (comment)=>{
+		if(!comment){
+			return res.status(400).send({
+				message:'No idea found',
+				data:{}
+			});	
+		}else{
+			let current_user=req.user;
+			if(comment.user_id!=current_user._id){
+				return res.status(400).send({
+					message:'Access denied',
+					data:{}
+				});	
+			}else{
+				try{
+					await Comment.deleteOne({_id:comment_id})
+					await Idea.updateOne(
+						{_id:comment.idea_id},
+						{
+							$pull:{comment:comment_id}
+						}
+					)
 
+					return res.status(200).send({
+						message:'Comment successfully deleted',
+						data:{}
+					});	
+				}catch(err){
+					return res.status(400).send({
+				  		message:err.message,
+				  		data:err
+				  	});
+				}
+			}
+		}
+	}).catch((err)=>{
+		return res.status(400).send({
+	  		message:err.message,
+	  		data:err
+	  	});
+	})
+}
+  const updateComment = async (req, res) => {
+	let comment_id=req.params.comment_id;
+	if(!mongoose.Types.ObjectId.isValid(comment_id)){
+		return res.status(400).send({
+	  		message:'Invalid comment id',
+	  		data:{}
+	  	});
+	}
+
+	Comment.findOne({_id:comment_id}).then(async (comment)=>{
+		if(!comment){
+			return res.status(400).send({
+				message:'No comment found',
+				data:{}
+			});	
+		}else{
+			let current_user=req.user;
+			if(comment.user_id!=current_user._id){
+				return res.status(400).send({
+					message:'Access denied',
+					data:{}
+				});	
+			}else{
+				try{
+					const v = new Validator(req.body, {
+						comment:'required',
+					});
+					const matched = await v.check();
+					if (!matched) {
+						return res.status(422).send(v.errors);
+					}
+					await Comment.updateOne({_id:comment_id},{
+						comment:req.body.comment,
+						
+					});
+					return res.status(200).send({
+						message:'Comment successfully updated',
+						data:comment[0]
+					});
+				}catch(err){
+					return res.status(400).send({
+				  		message:err.message,
+				  		data:err
+				  	});
+				}		
+			}
+		}
+	}).catch((err)=>{
+		return res.status(400).send({
+	  		message:err.message,
+	  		data:err
+	  	});
+	})
+}
 module.exports={
     getComment:getComment,
     createComment:createComment,

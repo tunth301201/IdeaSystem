@@ -15,6 +15,10 @@ const commentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  idea_id:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Idea'
+  }
   
 }, { timestamps: true });
 

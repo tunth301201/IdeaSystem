@@ -1,6 +1,4 @@
 const jwt=require('jsonwebtoken');
-
-
 exports.api=(req,res,next)=>{
 	var token=req.headers['authorization'];
 	if(token){
@@ -13,7 +11,6 @@ exports.api=(req,res,next)=>{
 		} catch(err) {
 		}	
 	}
-
 	next();
 }
 exports.auth=(req,res,next)=>{
@@ -49,4 +46,7 @@ exports.auth=(req,res,next)=>{
 		}
 		next();
 	}	
+	module.exports={
+	
+	}
 }
