@@ -1,4 +1,6 @@
 const jwt=require('jsonwebtoken');
+
+
 exports.api=(req,res,next)=>{
 	var token=req.headers['authorization'];
 	if(token){

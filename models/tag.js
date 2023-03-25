@@ -22,7 +22,7 @@ const tagSchema = new mongoose.Schema({
   end_dateOfIdea: {
     type: Date,
     required: false,
-  }
+  },
 }, { timestamps: true });
 
 const Tag = mongoose.model('Tag', tagSchema);
