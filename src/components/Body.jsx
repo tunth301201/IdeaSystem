@@ -5,7 +5,8 @@ export default function Body() {
   return (
     <div>
       <div id="main-content" className="relative w-full h-full overflow-auto bg-gray-50 lg:ml-64 pr-64 dark:bg-gray-900">
-        <div className="px-4 pt-6">
+        <h2 className="text-white text-lg text-left pl-4 pt-2 ">Home page</h2>
+        <div className="px-4 pt-2">
           {/* Chart and Top comment */}
           <div className="grid w-full gap-4 xl:grid-cols-2 2xl:grid-cols-3">
             {/* Chart */}
@@ -417,7 +418,7 @@ export default function Body() {
                 </a>
               </div>
               {/* Chat */}
-              <form className="overflow-y-auto lg:max-h-[60rem] 2xl:max-h-fit">
+              <form className="overflow-y-auto lg:max-h-[60rem] 2xl:max-h-fit text-left">
                 <article className="mb-5">
                   <footer className="flex items-center justify-between mb-2">
                     <div className="flex items-center">
@@ -695,8 +696,6 @@ export default function Body() {
                 </article>
               </form>
             </div>
-            {/* Right Content */}
-
           </div>
         </div>
         <div className="pr-7">
