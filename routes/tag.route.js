@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const tagController = require('../controllers/tag.controller');
-
+const middleware=require('./../helpers/middleware');
+const {checkper}=require('./../helpers/middleware');
 // POST /tags
 router.route('/')
 .post(tagController.createTag)
 // GET /tags
-.get(tagController.getTags)
+.get(middleware.auth,checkper(['Staff','Admin']),tagController.getTags)
 // GET /tag
 router.route('/:id')
 .get(tagController.getTag)

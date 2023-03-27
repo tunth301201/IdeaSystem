@@ -1,4 +1,17 @@
 const jwt=require('jsonwebtoken');
+const user=require('../models/User');
+exports.checkper= permission=> {
+	return (req, res, next)=>{
+		let current_user=req.user;
+		if(permission!=current_user.permission){
+			return res.status(400).send({
+				message:'You are not authorized',
+				data:{}
+		})
+	}
+	next();
+	}
+}
 exports.api=(req,res,next)=>{
 	var token=req.headers['authorization'];
 	if(token){
@@ -42,11 +55,9 @@ exports.auth=(req,res,next)=>{
 	           message:"Please login to continue."
 	          })
 	        }
-
 		}
 		next();
 	}	
 	module.exports={
-	
 	}
 }
