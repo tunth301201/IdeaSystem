@@ -47,6 +47,7 @@ const createComment = async (req, res) => {
 				await Idea.updateOne(
 					{_id:idea_id},
 					{
+
 						$push: { comment :commentData._id  } 
 					}
 				)
@@ -209,11 +210,111 @@ const replyComment = async (req, res) => {
 			}
 		})
 	}
+	const deletereplyComment = async (req, res) => {
+		let comment_id=req.params.comment_id;
+		let replycommentId=req.params.replycommentId;
+		if(!mongoose.Types.ObjectId.isValid(comment_id)){
+			return res.status(400).send({
+				  message:'Invalid comment id',
+				  data:{}
+			  });
+		}
+		if(!mongoose.Types.ObjectId.isValid(replycommentId)){
+			return res.status(400).send({
+				  message:'Invalid comment id',
+				  data:{}
+			  });
+		}
+		Comment.findOne({_id:comment_id}).then(async (comment)=>{
+			if(!comment){
+				return res.status(400).send({
+					message:'No comment found',
+					data:{}
+				});			
+			}
+			else{	
+					try{
+						await Comment.updateOne({_id:comment_id},{
+							$pull:{
+									
+								"reply":{_id: replycommentId}
+							}
+						});
+						return res.status(200).send({
+							message:'Delete reply comment successfully',
+							data:comment[0]
+						});
+					}catch(err){
+						return res.status(400).send({
+							  message:err.message,
+							  data:err
+						  });
+					}		
+				}
+			})
+		}
+		const editreplyComment = async (req, res) => {
+			let comment_id=req.params.comment_id;
+			let replycommentId=req.params.replycommentId;
+			if(!mongoose.Types.ObjectId.isValid(comment_id)){
+				return res.status(400).send({
+					  message:'Invalid comment id',
+					  data:{}
+				  });
+			}
+			if(!mongoose.Types.ObjectId.isValid(replycommentId)){
+				return res.status(400).send({
+					  message:'Invalid comment id',
+					  data:{}
+				  });
+			}
+			Comment.findOne({_id:comment_id}).then(async (comment)=>{
+				if(!comment){
+					return res.status(400).send({
+						message:'No comment found',
+						data:{}
+					});			
+				}else
+				{
+					let current_user=req.user;
+					if(current_user){
+						return res.status(400).send({
+							message:'Access denied',
+							data:{}
+						});	
+					}else{
+						try{
+							const v = new Validator(req.body, {
+								replycomment:'required',
+							});
+							const matched = await v.check();
+							if (!matched) {
+								return res.status(422).send(v.errors);
+							}
+							await Comment.updateOne({_id:replycommentId},{
+								comment:req.body.comment,
+								
+							});
+							return res.status(200).send({
+								message:'Reply Comment successfully updated',
+								data:comment[0]
+							});
+						}catch(err){
+							return res.status(400).send({
+								  message:err.message,
+								  data:err
+							  });
+						}		
+					}
+				}
+				})
+			}
 module.exports={
     getComment:getComment,
     createComment:createComment,
     deleteComment:deleteComment,
     updateComment:updateComment,
 	replyComment:replyComment,
-
+	deletereplyComment:deletereplyComment,
+	editreplyComment:editreplyComment,
 }
