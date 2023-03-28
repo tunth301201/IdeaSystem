@@ -136,6 +136,7 @@ const deleteComment =(req, res) => {
 			});	
 		}else{
 			let current_user=req.user;
+
 			if(comment.user_id!=current_user._id){
 				return res.status(400).send({
 					message:'Access denied',
@@ -173,10 +174,46 @@ const deleteComment =(req, res) => {
 	  	});
 	})
 }
+const replyComment = async (req, res) => {
+	let comment_id=req.params.comment_id;
+	if(!mongoose.Types.ObjectId.isValid(comment_id)){
+		return res.status(400).send({
+	  		message:'Invalid comment id',
+	  		data:{}
+	  	});
+	}
+
+	Comment.findOne({_id:comment_id}).then(async (comment)=>{
+		if(!comment){
+			return res.status(400).send({
+				message:'No comment found',
+				data:{}
+			});	
+		}else{	
+				try{
+					await Comment.updateOne({_id:comment_id},{
+						$push:{
+							"reply":{user_id:req.user._id,replycomment:req.body.replycomment,isAnonymityReply:req.body.isAnonymityReply}
+						}
+					});
+					return res.status(200).send({
+						message:'Reply comment successfully',
+						data:comment[0]
+					});
+				}catch(err){
+					return res.status(400).send({
+				  		message:err.message,
+				  		data:err
+				  	});
+				}		
+			}
+		})
+	}
 module.exports={
     getComment:getComment,
     createComment:createComment,
     deleteComment:deleteComment,
     updateComment:updateComment,
+	replyComment:replyComment,
 
 }

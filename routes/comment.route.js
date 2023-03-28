@@ -6,6 +6,8 @@ const middleware=require('./../helpers/middleware');
 router.get('/',middleware.auth, commentcontroller.getComment);
 //Create comment
 router.post('/:idea_id/comments/',middleware.auth, commentcontroller.createComment);
+//Create reply comment
+router.put('/:comment_id/reply',middleware.auth, commentcontroller.replyComment);
 //Delete comment
 router.delete('/:comment_id/',middleware.auth, commentcontroller.deleteComment);
 //Edit Comment

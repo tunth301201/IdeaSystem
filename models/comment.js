@@ -18,7 +18,23 @@ const commentSchema = new mongoose.Schema({
   idea_id:{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Idea'
-  }
+  },
+  reply: [{
+    user_id:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref:'User',
+      required: true,
+    },
+    replycomment:{
+      type: String,
+      required: true,
+    },
+    isAnonymityReply:{
+      type: Boolean,
+      required: true,
+      default: false,
+    }
+}]
   
 }, { timestamps: true });
 
