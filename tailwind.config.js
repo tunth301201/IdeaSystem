@@ -1,9 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  corePlugins: {
+   preflight: false,
+  },
   content: [
     "./public/index.html",
+    '.src/**/*.jsx',
+    "./node_modules/flowbite/**/*.js",
     "./node_modules/flowbite-react/lib/**/*.{js,ts}",
     "./src/**/*.{html,js,jsx}"],
+  important: '#root',
   theme: {
     colors: {
       primary: {
@@ -67,5 +73,9 @@ module.exports = {
     },
     extend: {},
   },
-  plugins: [require("flowbite/plugin")],
+  plugins: [require(
+    'flowbite/plugin',
+    "tw-elements/dist/plugin"
+    )],
+  important: true,
 }

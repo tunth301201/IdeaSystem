@@ -4,21 +4,29 @@ import theme from "./flowbite-theme.js";
 import { Flowbite } from "flowbite-react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import DashboardPage from './pages/Dashboard/DashboardPage';
-import ProductPage from './pages/Product/ProductPage';
+import TagPage from './pages/Tag/TagPage';
 import UserPage from './pages/User/UserPage';
 import IdeaPage from './pages/Idea/IdeaPage';
+import NavbarSidebarLayout from './layouts/NavBar-SideBar';
+import Layout from './layouts/Layout';
 
 export default function App() {
   return (
     <Flowbite theme={{ theme }}>
       <BrowserRouter>
         <Routes>
-        
-          <Route path="/" index element={<DashboardPage />}/>
-          <Route path="/tags" element={<ProductPage />} />
-          <Route path="/users/list" element={<UserPage />} />
-          <Route path="/ideas" element={<IdeaPage />} />
-      
+          {/* <Route path="/" element={<NavbarSidebarLayout />}>
+            <Route path="/" index element={<DashboardPage />}/>
+            <Route path="/tags" element={<TagPage />} />
+            <Route path="/users/list" element={<UserPage />} />
+            <Route path="/ideas" element={<IdeaPage />} />
+          </Route> */}
+          <Route path="/" element={<Layout />}> 
+            <Route path="/" index element={<DashboardPage />}/>
+            <Route path="/tags" element={<TagPage />} />
+            <Route path="/users/list" element={<UserPage />} />
+            <Route path="/ideas" element={<IdeaPage />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </Flowbite>

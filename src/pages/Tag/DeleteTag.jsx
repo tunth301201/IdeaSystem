@@ -1,13 +1,13 @@
 import { React, useState } from "react";
 import { HiOutlineExclamationCircle, HiTrash } from "react-icons/hi"
 
-export default function DeleteUser(){
+export default function DeleteTag(){
     return (
       <>
         <div
           data-te-modal-init
           class="fixed top-0 left-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-non bg-gray-900 bg-opacity-50 dark:bg-opacity-80"
-          id="exampleModalCenterDeleteUser"
+          id="exampleModalCenterDelete"
           tabindex="-1"
           data-te-backdrop="static"
           data-te-keyboard="false"
@@ -49,7 +49,7 @@ export default function DeleteUser(){
                 <div className="flex flex-col items-center gap-y-6 text-center">
                   <HiOutlineExclamationCircle className="text-7xl text-red-700" />
                   <p className="text-lg text-gray-500 dark:text-gray-300">
-                    Are you sure you want to delete this User?
+                    Are you sure you want to delete this Tag?
                   </p>
                   <div className="flex items-center pb-4">
                     <button

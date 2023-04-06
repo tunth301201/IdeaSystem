@@ -1,32 +1,32 @@
+import { Outlet } from "react-router-dom";
+import React from "react";
+import Navigation from "../components/NavBar/Navigation";
+import Side_Bar from "../components/SideBar/Side_Bar";
+import 'flowbite';
 import { Footer } from "flowbite-react"
 import { MdFacebook } from "react-icons/md"
 import { FaDribbble, FaGithub, FaInstagram, FaTwitter } from "react-icons/fa"
-import NavBar from "../components/NavBar/NavBar";
-import SideBar from "../components/SideBar/SideBar";
-import { Outlet } from "react-router-dom";
 
-export default function NavbarSidebarLayout({ children, isFooter = true }) {
+export default function Layout(){
     return (
-      <>
-        <NavBar />
-        <div className="flex items-start pt-16">
-          <SideBar />
-          <MainContent isFooter={isFooter}></MainContent>
-        </div>
-      </>
+        <>
+            <Navigation />
+            <div>
+                <Side_Bar />
+                <MainContent />
+            </div>
+        </>
     )
 }
 
-const MainContent = function({ children, isFooter }) {
+const MainContent = function() {
     return (
-      <main className="relative h-full w-full overflow-y-auto bg-gray-50 dark:bg-gray-900 lg:ml-64">
-        <Outlet/>
-        
-          <div className="mx-4 mt-4">
-            <MainContentFooter />
-          </div>
-        
-      </main>
+       <div className="sm:ml-64 mt-12">
+            <Outlet />
+            <div className="mx-4 mt-4">
+                <MainContentFooter />
+            </div>
+        </div>
     )
 }
 

@@ -5,18 +5,16 @@ import NavbarSidebarLayout from "../../layouts/NavBar-SideBar"
 
 export default function DashboardPage() {
   return (
-    <NavbarSidebarLayout isFooter={true}>
-      <div className="px-4 pt-6">
-        <SalesThisWeek />
-        <div className="my-6">
-          <LatestTransactions />
-        </div>
-        <LatestCustomers />
-        <div className="my-6">
-          <AcquisitionOverview />
-        </div>
+    <div className="px-4 pt-6">
+      <SalesThisWeek />
+      <div className="my-6">
+        <LatestTransactions />
       </div>
-    </NavbarSidebarLayout>
+      <LatestCustomers />
+      <div className="my-6">
+        <AcquisitionOverview />
+      </div>
+    </div>
   )
 }
 

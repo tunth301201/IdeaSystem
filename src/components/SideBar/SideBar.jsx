@@ -10,18 +10,55 @@ import {
   HiLightBulb,
   HiTag
 } from "react-icons/hi";
+import { Link, useLocation } from "react-router-dom";
 
 export default function SideBar() {
   const [currentPage, setCurrentPage] = useState("");
+  const location = useLocation();
 
-  useEffect(() => {
-    const newPage = window.location.pathname;
+  const SideBarData = [
+    {
+        icon: HiChartPie,
+        label: "Dashboard",
+        path: "/"
+    }, 
+    {
+        icon: HiTag,
+        label: "Tags",
+        path: "/tags"
+    },
+    {
+        icon: HiLightBulb,
+        label: "Ideas",
+        path: "/ideas"
+    }, 
+    {
+        icon: HiUsers,
+        label: "User list",
+        path: "/users/list"
+    }
+  ]
 
-    setCurrentPage(newPage);
-  }, [setCurrentPage]);
-
+  const sidebar = SideBarData.map((val, index) => {
+    return (
+      <Link to={val.path} key={index}>
+        <Sidebar.Item
+          icon={val.icon}
+          className={ val.path === location.pathname 
+            ? "bg-gray-100 dark:bg-gray-700" 
+            : ""
+          }>
+          {val.label}
+        </Sidebar.Item>
+      </Link>
+    )
+  })
   return (
-    <Sidebar aria-label="Sidebar with multi-level dropdown example" className="flex fixed top-0 left-0 z-20 flex-col flex-shrink-0 pt-16 h-full duration-75 border-r border-gray-200 lg:flex transition-width dark:border-gray-700">
+    <>
+    
+    <Sidebar id="default-sidebar"
+      aria-label="Sidebar with multi-level dropdown example" className="flex fixed top-0 left-0 z-20 flex-col flex-shrink-0 pt-16 h-full duration-75 border-r border-gray-200 lg:flex transition-width dark:border-gray-700">
+   
       <div className="flex h-full flex-col justify-between py-2">
         <div>
           <form className="pb-3 md:hidden">
@@ -35,48 +72,7 @@ export default function SideBar() {
           </form>
           <Sidebar.Items>
             <Sidebar.ItemGroup>
-              <Sidebar.Item
-                href="/"
-                icon={HiChartPie}
-                className={
-                  "/" === currentPage ? "bg-gray-100 dark:bg-gray-700" : ""
-                }
-              >
-                Dashboard
-              </Sidebar.Item>
-              <Sidebar.Item
-                href="/tags"
-                icon={HiTag}
-                className={
-                  "/tags" === currentPage
-                    ? "bg-gray-100 dark:bg-gray-700"
-                    : ""
-                }
-              >
-                Tags
-              </Sidebar.Item>
-              <Sidebar.Item
-                href="/ideas"
-                icon={HiLightBulb}
-                className={
-                  "/ideas" === currentPage
-                    ? "bg-gray-100 dark:bg-gray-700"
-                    : ""
-                }
-              >
-                Idea
-              </Sidebar.Item>
-              <Sidebar.Item
-                href="/users/list"
-                icon={HiUsers}
-                className={
-                  "/users/list" === currentPage
-                    ? "bg-gray-100 dark:bg-gray-700"
-                    : ""
-                }
-              >
-                Users list
-              </Sidebar.Item>
+              {sidebar}
             </Sidebar.ItemGroup>
             <Sidebar.ItemGroup>
               <Sidebar.Item
@@ -102,5 +98,6 @@ export default function SideBar() {
         </div>
       </div>
     </Sidebar>
+    </>
   );
 };

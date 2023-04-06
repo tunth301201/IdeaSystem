@@ -1,34 +1,28 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {
-  Breadcrumb,
-  Button,
-  Checkbox,
-  Label,
-  Modal,
-  Table,
-  Textarea,
-  TextInput
-} from "flowbite-react";
-import { useState } from "react";
-import {
-  HiCog,
-  HiDotsVertical,
-  HiExclamationCircle,
-  HiHome,
-  HiOutlineExclamationCircle,
-  HiPencilAlt,
-  HiTrash,
-  HiUpload
-} from "react-icons/hi"
-import NavbarSidebarLayout from "../../layouts/NavBar-SideBar";
-import { Pagination } from "../User/UserPage";
-import AddIdea from "./AddIdea";
+import { Breadcrumb } from "flowbite-react";
+import React, { useCallback, useMemo, useState } from 'react';
+import { HiHome, HiTrash, HiEye } from "react-icons/hi"
+
 import DeleteIdea from "./DeleteIdea";
-import EditIdea from "./EditIdea";
+import MaterialReactTable from 'material-react-table';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  MenuItem,
+  Stack,
+  TextField,
+  Tooltip,
+} from '@mui/material';
+import ViewIdea from "./ViewIdea";
   
 export default function IdeaPage() {
     return (
-      <NavbarSidebarLayout isFooter={false}>
+      <>
         <div className="block items-center justify-between border-b border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800 sm:flex">
           <div className="mb-1 w-full">
             <div className="mb-4">
@@ -39,50 +33,11 @@ export default function IdeaPage() {
                     <span className="dark:text-white">Home</span>
                   </div>
                 </Breadcrumb.Item>
-                <Breadcrumb.Item href="/e-commerce/products">
-                  E-commerce
-                </Breadcrumb.Item>
-                <Breadcrumb.Item>Products</Breadcrumb.Item>
+                <Breadcrumb.Item>Ideas</Breadcrumb.Item>
               </Breadcrumb>
               <h1 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">
-                All products
+                All Ideas
               </h1>
-            </div>
-            <div className="block items-center sm:flex">
-              <SearchForProducts />
-              <div className="hidden space-x-1 border-l border-gray-100 pl-2 dark:border-gray-700 md:flex">
-                <a
-                  href="#"
-                  className="inline-flex cursor-pointer justify-center rounded p-1 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                >
-                  <span className="sr-only">Configure</span>
-                  <HiCog className="text-2xl" />
-                </a>
-                <a
-                  href="#"
-                  className="inline-flex cursor-pointer justify-center rounded p-1 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                >
-                  <span className="sr-only">Delete</span>
-                  <HiTrash className="text-2xl" />
-                </a>
-                <a
-                  href="#"
-                  className="inline-flex cursor-pointer justify-center rounded p-1 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                >
-                  <span className="sr-only">Purge</span>
-                  <HiExclamationCircle className="text-2xl" />
-                </a>
-                <a
-                  href="#"
-                  className="inline-flex cursor-pointer justify-center rounded p-1 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                >
-                  <span className="sr-only">Settings</span>
-                  <HiDotsVertical className="text-2xl" />
-                </a>
-              </div>
-              <div className="flex w-full items-center sm:justify-end">
-                <AddIdea /> 
-              </div>
             </div>
           </div>
         </div>
@@ -94,74 +49,191 @@ export default function IdeaPage() {
               </div>
             </div>
           </div>
-        </div>
-        <Pagination />
-      </NavbarSidebarLayout>
+        </div> 
+      </>
     )
   }
   
-  const SearchForProducts = function() {
-    return (
-      <form className="mb-4 sm:mb-0 sm:pr-3" action="#" method="GET">
-        <Label htmlFor="products-search" className="sr-only">
-          Search
-        </Label>
-        <div className="relative mt-1 lg:w-64 xl:w-96">
-          <TextInput
-            id="products-search"
-            name="products-search"
-            placeholder="Search for products"
-          />
-        </div>
-      </form>
-    )
-  }
-
   const ProductsTable = function() {
-    return (
-      <Table className="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
-        <Table.Head className="bg-gray-100 dark:bg-gray-700">
-          <Table.HeadCell>
-            <span className="sr-only">Toggle selected</span>
-            <Checkbox />
-          </Table.HeadCell>
-          <Table.HeadCell>Product Name</Table.HeadCell>
-          <Table.HeadCell>Technology</Table.HeadCell>
-          <Table.HeadCell>ID</Table.HeadCell>
-          <Table.HeadCell>Price</Table.HeadCell>
-          <Table.HeadCell>Actions</Table.HeadCell>
-        </Table.Head>
-        <Table.Body className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
-          
-          <Table.Row className="hover:bg-gray-100 dark:hover:bg-gray-700">
-            <Table.Cell className="w-4 p-4">
-              <Checkbox />
-            </Table.Cell>
-            <Table.Cell className="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
-              <div className="text-base font-semibold text-gray-900 dark:text-white">
-                Education Dashboard
-              </div>
-              <div className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                Html templates
-              </div>
-            </Table.Cell>
-            <Table.Cell className="whitespace-nowrap p-4 text-base font-medium text-gray-900 dark:text-white">
-              Angular
-            </Table.Cell>
-            <Table.Cell className="whitespace-nowrap p-4 text-base font-medium text-gray-900 dark:text-white">
-              #124859
-            </Table.Cell>
-            <Table.Cell className="whitespace-nowrap p-4 text-base font-medium text-gray-900 dark:text-white">
-              $149
-            </Table.Cell>
-            <Table.Cell className="space-x-2 whitespace-nowrap p-4">
-              <div className="flex items-center gap-x-3">
-                <EditIdea />
-                <DeleteIdea />
-              </div>
-            </Table.Cell>
-          </Table.Row>
-        </Table.Body>
-      </Table>
-    )
+
+    const ideaList = [
+      {
+        tag: "#",
+        user: "#",
+        title: "#",
+        content: "#",
+        like: "#",
+        dislike: "#",
+        document: "#",
+        view_time: "#"
+      }
+    ]
+
+const [createModalOpen, setCreateModalOpen] = useState(false);
+const [tableData, setTableData] = useState(() => ideaList);
+const [validationErrors, setValidationErrors] = useState({});
+
+const handleCreateNewRow = (values) => {
+  tableData.push(values);
+  setTableData([...tableData]);
+};
+
+const handleSaveRowEdits = async ({ exitEditingMode, row, values }) => {
+  if (!Object.keys(validationErrors).length) {
+    tableData[row.index] = values;
+    //send/receive api updates here, then refetch or update local table data for re-render
+    setTableData([...tableData]);
+    exitEditingMode(); //required to exit editing mode and close modal
+  }
+};
+
+const handleCancelRowEdits = () => {
+  setValidationErrors({});
+};
+const columns = useMemo(
+  () => [
+    {
+      accessorKey: 'tag',
+      header: 'Tag',
+      enableColumnOrdering: false,
+      enableEditing: false, //disable editing on this column
+      enableSorting: false,
+      size: 80,
+    },
+    {
+      accessorKey: 'user',
+      header: 'User',
+      size: 140,
+      // muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
+      //   ...getCommonEditTextFieldProps(cell),
+      // }),
+    },
+    {
+      accessorKey: 'title',
+      header: 'Title',
+      size: 140,
+      // muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
+      //   ...getCommonEditTextFieldProps(cell),
+      // }),
+    },
+    {
+      accessorKey: 'content',
+      header: 'Content',
+      // muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
+      //   ...getCommonEditTextFieldProps(cell),
+      //   type: 'email',
+      // }),
+    },
+    {
+      accessorKey: 'like',
+      header: 'Like',
+      size: 80,
+      // muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
+      //   ...getCommonEditTextFieldProps(cell),
+      //   type: 'number',
+      // }),
+    },
+    {
+      accessorKey: 'dislike',
+      header: 'Dislike',
+      size: 80,
+      // muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
+      //   ...getCommonEditTextFieldProps(cell),
+      //   type: 'number',
+      // }),
+    },
+    {
+      accessorKey: 'document',
+      header: 'Document',
+      size: 80,
+      // muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
+      //   ...getCommonEditTextFieldProps(cell),
+      //   type: 'number',
+      // }),
+    },
+    {
+      accessorKey: 'view_time',
+      header: 'View time',
+      size: 80,
+      // muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
+      //   ...getCommonEditTextFieldProps(cell),
+      //   type: 'number',
+      // }),
+    }
+  ],
+  // [getCommonEditTextFieldProps],
+);
+
+return (
+  <>
+    <MaterialReactTable
+      displayColumnDefOptions={{
+        'mrt-row-actions': {
+          muiTableHeadCellProps: {
+            align: 'center',
+          },
+          size: 120,
+        },
+      }}
+      columns={columns}
+      data={tableData}
+      editingMode="modal" //default
+      enableColumnOrdering
+      enableEditing
+      onEditingRowSave={handleSaveRowEdits}
+      onEditingRowCancel={handleCancelRowEdits}
+      renderRowActions={({ row, table }) => (
+        <Box sx={{ display: 'flex', gap: '1rem' }}>
+          <Tooltip arrow placement="left" title="Delete">
+            <IconButton
+          //   onClick={() => handleDeleteRow(row)}
+            >
+              <span
+                type="button"
+                class="cursor text-blue-700"
+                data-te-toggle="modal"
+                data-te-target="#exampleModalLg"
+                data-te-ripple-init
+                data-te-ripple-color="light">
+                <HiEye size='1.5rem' />
+              </span> 
+            </IconButton>
+          </Tooltip>
+          <Tooltip arrow placement="right" title="Delete">
+            <IconButton
+          //   onClick={() => handleDeleteRow(row)}
+            >
+              <span
+                type="button"
+                class="cursor text-red-700"
+                data-te-toggle="modal"
+                data-te-target="#exampleModalCenter"
+                data-te-ripple-init
+                data-te-ripple-color="light">
+                <HiTrash size='1.5rem' />
+              </span> 
+            </IconButton>
+          </Tooltip>
+        </Box>
+      )}
+      // renderTopToolbarCustomActions={() => (
+      //   <Button
+      //     color="primary"
+      //     onClick={() => setCreateModalOpen(true)}
+      //     variant="contained"
+      //   >
+      //     Create New Account
+      //   </Button>
+      // )}
+    />
+    <DeleteIdea />
+    <ViewIdea />
+    {/* <CreateNewAccountModal
+      columns={columns}
+      open={createModalOpen}
+      onClose={() => setCreateModalOpen(false)}
+      onSubmit={handleCreateNewRow}
+    /> */}
+  </>
+);
   }
