@@ -4,8 +4,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Home from "./pages/Home/Home";
 import SignUp from "./pages/Signup/Signup";
-import Createform from "./components/Createform";
 import Createidea from './pages/CreateIdea/Createidea';
+import Tag from './pages/Tag/Tag';
+import Profile from './pages/Profile/Profile';
 
 
 export default function App() {
@@ -17,6 +18,8 @@ export default function App() {
           <Route path="/signup" element={<SignUp></SignUp>}></Route>
           <Route path="/home" element={<Home></Home>}></Route>
           <Route path="/createidea" element={<Createidea></Createidea>}></Route>
+          <Route path="/tag" element={<Tag></Tag>}></Route>
+          <Route path="/profile" element={<Profile></Profile>}></Route>
         </Routes>
       </BrowserRouter>
     </div>

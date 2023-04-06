@@ -24,7 +24,7 @@ export default function Createform() {
     };
   return (
     <div>
-      <div id="main-content" className="relative w-full h-full overflow-auto bg-gray-50 lg:ml-64 pr-64 dark:bg-gray-900">
+      <div id="main-content" className="fixed w-full h-full overflow-auto bg-gray-50 lg:ml-64 pr-64 dark:bg-gray-900">
         <h2 className="text-white text-lg text-left pl-4 pt-2">Create Idea</h2>
         <div className="px-4 pt-0">
           <div className="grid w-full grid-cols-1 my-4 ">
