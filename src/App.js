@@ -9,6 +9,7 @@ import Tag from './pages/Tag/Tag';
 import Profile from './pages/Profile/Profile';
 import LoginSignup from "./pages/LoginSignup/LoginSignup";
 import MainLayout from "./pages/MainLayout/MainLayout";
+import Viewidea from "./pages/ViewIdea/Viewidea";
 
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
             <Route path="/createidea" element={<Createidea></Createidea>}></Route>
             <Route path="/tag" element={<Tag></Tag>}></Route>
             <Route path="/profile" element={<Profile></Profile>}></Route>
+            <Route path="/viewidea" element={<Viewidea></Viewidea>}></Route>  
           </Route>
         </Routes>
       </BrowserRouter>
