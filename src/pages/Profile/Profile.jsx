@@ -1,10 +1,57 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap'
 import LikeImg from '../../assets/Profile/like.png'
-import DislikeImg from '../../assets/Profile/dislike.png' 
+import DislikeImg from '../../assets/Profile/dislike.png'
+import { AiTwotoneLike, AiTwotoneDislike } from 'react-icons/ai' 
 
 export default function Profile() {
+  const [showLike, setShowLike] = useState(false)
+  const [showDislike, setShowDislike] = useState(false)
+  const handleLike = () => {
+    
+    if (!showLike === true)
+    localStorage.setItem("likeStatus", "like")
+    else localStorage.setItem("likeStatus", "")
+    setShowLike(!showLike)
+    functionCall()
+  }
   
+  const handleDislike = () => {
+    if (!showDislike === true)
+    localStorage.setItem("likeStatus", "dislike")
+    else localStorage.setItem("likeStatus", "")
+    setShowDislike(!showDislike)
+    functionCall()
+  }
+
+  const functionCall = () => {
+    if (localStorage.getItem("likeStatus") === "")
+    {
+      setShowLike(false)
+      setShowDislike(false)
+    } else if (localStorage.getItem("likeStatus") === "like") {
+      setShowLike(true)
+      setShowDislike(false)
+    } else if (localStorage.getItem("likeStatus") === "dislike") {
+      setShowLike(false)
+      setShowDislike(true)
+    }
+  }
+
+  useEffect(() => {
+    if (localStorage.getItem("likeStatus") === "")
+    {
+      setShowLike(false)
+      setShowDislike(false)
+    } else if (localStorage.getItem("likeStatus") === "like") {
+      setShowLike(true)
+      setShowDislike(false)
+    } else if (localStorage.getItem("likeStatus") === "dislike") {
+      setShowLike(false)
+      setShowDislike(true)
+    }
+  },[])
+
   return (
     <>
       <div id="main-content" className="fixed w-full h-full overflow-auto bg-gray-50 lg:ml-64 pr-64 dark:bg-gray-900">
@@ -26,11 +73,11 @@ export default function Profile() {
                   <p className="mb-3 text-gray-900 dark:text-white">Subject of Tag titile: </p>
                   <p className="mb-2 text-gray-900 dark:text-white">Short Description</p>
                   <div className="flex items-center mb-2 space-x-2">
-                    <Button type="button" className="py-1.5 px-3 inline-flex items-center rounded-lg bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-600 dark:bg-gray-700">
-                      <img className="h-5 mr-2" src={LikeImg} alt='icon'></img>
+                    <Button onClick={handleLike} type="button" id="like" name="like" className="py-1.5 px-3 inline-flex items-center rounded-lg bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-600 dark:bg-gray-700">
+                      <AiTwotoneLike size="1rem" className={`cursor-pointer ${!showLike? "" : "text-white"}`} />
                     </Button>
-                    <Button type="button" className="py-1.5 px-3 inline-flex items-center rounded-lg bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-600 dark:bg-gray-700">
-                      <img className="h-5 mr-2" src={DislikeImg} alt='icon'></img>
+                    <Button onClick={handleDislike} type="button" id="dislike" name="dislike" className="py-1.5 px-3 inline-flex items-center rounded-lg bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-600 dark:bg-gray-700">
+                      <AiTwotoneDislike size="1rem" className={`cursor-pointer ${!showDislike? "" : "text-white"}`} />
                     </Button>
                   </div>
                   <Button href="#" className="inline-flex items-center text-xs font-medium text-primary-700 sm:text-sm dark:text-primary-500">

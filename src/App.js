@@ -7,6 +7,8 @@ import SignUp from "./pages/Signup/Signup";
 import Createidea from './pages/CreateIdea/Createidea';
 import Tag from './pages/Tag/Tag';
 import Profile from './pages/Profile/Profile';
+import LoginSignup from "./pages/LoginSignup/LoginSignup";
+import MainLayout from "./pages/MainLayout/MainLayout";
 
 
 export default function App() {
@@ -14,12 +16,16 @@ export default function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route exact path="/" element={<Login></Login>}></Route>
-          <Route path="/signup" element={<SignUp></SignUp>}></Route>
-          <Route path="/home" element={<Home></Home>}></Route>
-          <Route path="/createidea" element={<Createidea></Createidea>}></Route>
-          <Route path="/tag" element={<Tag></Tag>}></Route>
-          <Route path="/profile" element={<Profile></Profile>}></Route>
+          <Route element={<LoginSignup />}>
+            <Route index path="/" element={<Login />}/>
+            <Route path="/signup" element={<SignUp />} />
+          </Route>
+          <Route element={<MainLayout />}>
+            <Route index path="/home" element={<Home></Home>}></Route>
+            <Route path="/createidea" element={<Createidea></Createidea>}></Route>
+            <Route path="/tag" element={<Tag></Tag>}></Route>
+            <Route path="/profile" element={<Profile></Profile>}></Route>
+          </Route>
         </Routes>
       </BrowserRouter>
     </div>
