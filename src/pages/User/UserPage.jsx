@@ -2,7 +2,7 @@ import { Breadcrumb, Button, Label, TextInput, Textarea } from "flowbite-react";
 import { HiHome, HiPencilAlt, HiTrash } from "react-icons/hi";
 import React, {useEffect,useCallback, useMemo, useState } from 'react';
 import MaterialReactTable from 'material-react-table';
-import getUser from './userService';
+import getUser,{deleteUser,addUser,updateUser} from './userService';
 import {
   Box,
   Dialog,
@@ -54,9 +54,10 @@ export default function UserPage() {
     </>
   )
 }
-
+//AllUsersTable
 const AllUsersTable = ()=> {
   const [userList, setUserList] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
   useEffect(() => {
     async function fetchUser() {
       const users = await getUser();
@@ -64,19 +65,15 @@ const AllUsersTable = ()=> {
     }
     fetchUser();
   }, []);
-  
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [tableData, setTableData] = useState(() => userList);
   const [validationErrors, setValidationErrors] = useState({});
+  
   useEffect(() => {
     setTableData(userList);
   }, [userList]);
   // console.log(tableData.map(m => m.user.props))
-  const handleCreateNewRow = (values) => {
-    tableData.push(values);
-    setTableData([...tableData]);
-  }
-
+  const [users, setUsers] = useState([]);
   const handleSaveRowEdits = async ({ exitEditingMode, row, values }) => {
     if (!Object.keys(validationErrors).length) {
       tableData[row.index] = values;
@@ -85,7 +82,63 @@ const AllUsersTable = ()=> {
       exitEditingMode(); //required to exit editing mode and close modal
     }
   };
+  const [user, setUser] = useState({});
+  const [success, setSuccess] = useState(false);
   
+  const handleUpdateUser = async (id) => {
+    console.log("id:", id);
+    const userToUpdate = tableData.find((user) => user._id === id);
+    setSelectedUser(userToUpdate);
+    console.log(id);
+    if (userToUpdate) {
+      try {
+        const { _id, ...updatedUser } = userToUpdate;
+        const response = await updateUser(_id, updatedUser);
+        console.log(response);
+        setSuccess(true);
+ 
+      } catch (error) {
+        console.log(error);
+      }
+      
+    }
+  };
+  const handleSaveUser = (updatedUser) => {
+    updateUser(updatedUser._id, updatedUser)
+      .then(response => {
+        console.log(response); 
+        setSuccess(true);
+        setSelectedUser(null);
+        window.location.reload()
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+  const [userToDelete, setUserToDelete] = useState(null);
+
+const handleDeleteUser = async (id) => {
+
+  const userToDelete = tableData.find((user) => user._id === id);
+  console.log(userToDelete);
+  window.location.reload()
+  if (userToDelete) {
+    try {
+      const { _id, ...user } = userToDelete; // Renamed the destructured variable
+      const response = await deleteUser(_id, user); // Used the new variable name
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+};
+
+const handleDeleteClick = (id) => {
+  const userToDelete = tableData.find((user) => user._id === id);
+  if (userToDelete) {
+    setUserToDelete(userToDelete);
+  }
+};
   const handleCancelRowEdits = () => {
     setValidationErrors({});
   };
@@ -168,7 +221,7 @@ const AllUsersTable = ()=> {
         renderRowActions={({ row, table }) => (
           <Box sx={{ display: 'flex', gap: '1rem' }}>
             <Tooltip arrow placement="left" title="Edit">
-              <IconButton> 
+              <IconButton onClick={() => handleUpdateUser(row.original._id)}> 
                 <span
                   type="button"
                   class="cursor text-blue-700"
@@ -181,7 +234,7 @@ const AllUsersTable = ()=> {
               </IconButton>
             </Tooltip>
             <Tooltip arrow placement="right" title="Delete">
-              <IconButton color="error">
+            <IconButton color="error" onClick={() => handleDeleteClick(row.original._id)}>
                 <span
                   type="button"
                   class="cursor text-red-700"
@@ -196,7 +249,7 @@ const AllUsersTable = ()=> {
           </Box>
         )}
         renderTopToolbarCustomActions={() => (
-          <span
+          <span 
             type="button"
             class="cursor inline-block rounded px-3 pt-2.5 pb-2 text-blue-700"
             data-te-toggle="modal"
@@ -207,9 +260,11 @@ const AllUsersTable = ()=> {
           </span>
         )}
       />
-      <AddUser />
-      <EditUser />
-      <DeleteUser />
+      <AddUser addUser={addUser} />
+      {selectedUser && <EditUser user={selectedUser} onSaveUser={handleSaveUser} />}
+      {(
+  <DeleteUser user={userToDelete} onDeleteUser={() => handleDeleteUser(userToDelete._id)} />
+)}
     </>
   )
 }

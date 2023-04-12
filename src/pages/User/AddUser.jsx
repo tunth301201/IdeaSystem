@@ -24,9 +24,16 @@ import {
     HiUpload
 } from "react-icons/hi"
 
-export default function AddUser() {
+export default function AddUser(props) {
+  const [user, setUser] = useState({});
   const [image, setImage] = useState("");
   const [show, setShow] = useState(false);
+
+  const handleAddUser = () => {
+    console.log(user);
+    props.addUser(user);
+    window.location.reload()
+  };
   const imageChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       setImage(e.target.files[0]);
@@ -59,9 +66,8 @@ export default function AddUser() {
       border: "none",
     },
   }
-
   return (
-    <div
+    <div 
       data-te-modal-init
       class="fixed top-0 left-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-non bg-gray-900 bg-opacity-50 dark:bg-opacity-80"
       id="exampleModalCenter"
@@ -110,7 +116,8 @@ export default function AddUser() {
               <div className="mt-1">
                     <TextInput
                     id="name"
-                    name="name"
+                    value={user.fullname}
+                    onChange={(e) => setUser({ ...user, fullname: e.target.value })}
                     placeholder="Ariana Grande"
                     />
               </div>
@@ -118,7 +125,10 @@ export default function AddUser() {
             <div>
               <Label htmlFor="password">Password</Label>
               <div className="mt-1">
-                  <TextInput id="password" name="password" placeholder="123123213" />
+                  <TextInput id="password"                    
+                  value={user.password}
+                  onChange={(e) => setUser({ ...user, password: e.target.value })}
+                  placeholder="123123213" />
               </div>
             </div>
             <div>
@@ -126,7 +136,8 @@ export default function AddUser() {
               <div className="mt-1">
                   <TextInput
                   id="email"
-                  name="email"
+                  value={user.email}
+                  onChange={(e) => setUser({ ...user, email: e.target.value })}
                   placeholder="example@company.com"
                   type="email"
                   />
@@ -137,10 +148,12 @@ export default function AddUser() {
               <div className="mt-1">
                   <Select
                       id="gender"
-                      name="gender"
+                      value={user.gender}
+                      onChange={(e) => setUser({ ...user, gender: e.target.value })}
                   >
+                    <option defaultValue="Male">Male</option>
                       <option>Female</option>
-                      <option>Male</option>
+                      
                   </Select>
               </div>
             </div>
@@ -149,11 +162,12 @@ export default function AddUser() {
               <div className="mt-1">
                 <Select
                   id="department"
-                  name="department"
+                  value={user.department}
+                  onChange={(e) => setUser({ ...user,department: e.target.value })}
                 >
-                  <option>Department A</option>
-                  <option>Department B</option>
-                  <option>Department C</option>
+                  <option>A</option>
+                  <option>B</option>
+                  <option>C</option>
                 </Select>
             </div>
             </div>
@@ -162,8 +176,10 @@ export default function AddUser() {
               <div className="mt-1">
                 <Select
                   id="permission"
-                  name="permission"
+                  value={user.permission}
+                  onChange={(e) => setUser({ ...user, permission: e.target.value })}
                 >
+                  <option>QAManager</option>
                   <option>Staff</option>
                   <option>QA</option>
                 </Select>
@@ -203,7 +219,6 @@ export default function AddUser() {
                       className="hidden"
                       onChange={imageChange}
                       />
-                      
                   </label>
                 </div>
               </div>
@@ -219,7 +234,8 @@ export default function AddUser() {
               data-te-ripple-color="light">
               Close
             </button>
-            <button
+            <button 
+              onClick={handleAddUser}
               type="button"
               class="pb-2 uppercase text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
               data-te-ripple-init

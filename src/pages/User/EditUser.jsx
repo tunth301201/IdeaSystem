@@ -24,7 +24,22 @@ import {
   HiUpload
 } from "react-icons/hi"
 
-export default function EditUser() {
+export default function EditUser(props) {
+  const [updatedUser, setUpdatedUser] = useState(props.user);
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setUpdatedUser((prevUser) => {
+      return {
+        ...prevUser,
+        [name]: value
+      };
+    });
+  };
+  
+  const handleSave = () => {
+    console.log(updatedUser);
+    props.onSaveUser(updatedUser);
+  };
 return (
   <div
     data-te-modal-init
@@ -75,7 +90,13 @@ return (
             <div className="mt-1">
                   <TextInput
                   id="name"
-                  name="name"
+                  value={updatedUser.fullname || ''}
+                  onChange={(event) =>
+                    setUpdatedUser((prevUser) => ({
+                      ...prevUser,
+                      fullname: event.target.value
+                    }))
+                  }
                   placeholder="Ariana Grande"
                   />
             </div>
@@ -83,7 +104,7 @@ return (
           <div>
             <Label htmlFor="password">Password</Label>
             <div className="mt-1">
-                <TextInput id="password" name="password" placeholder="123123213" />
+                <TextInput id="password"  value={updatedUser.password} placeholder="123123213"onChange={handleInputChange}/>
             </div>
           </div>
           <div>
@@ -91,7 +112,12 @@ return (
             <div className="mt-1">
                 <TextInput
                 id="email"
-                name="email"
+                value={updatedUser.email || ''}
+                onChange={(event) =>
+                  setUpdatedUser((prevUser) => ({
+                    ...prevUser,
+                    email: event.target.value
+                  }))}
                 placeholder="example@company.com"
                 type="email"
                 />
@@ -102,7 +128,12 @@ return (
             <div className="mt-1">
                 <Select
                     id="gender"
-                    name="gender"
+                    value={updatedUser.gender || ''}
+                    onChange={(event) =>
+                      setUpdatedUser((prevUser) => ({
+                        ...prevUser,
+                        gender: event.target.value
+                      }))}
                 >
                     <option>Female</option>
                     <option>Male</option>
@@ -114,11 +145,16 @@ return (
             <div className="mt-1">
               <Select
                 id="department"
-                name="department"
+                value={updatedUser.department || ''}
+                onChange={(event) =>
+                  setUpdatedUser((prevUser) => ({
+                    ...prevUser,
+                    department: event.target.value
+                  }))}
               >
-                <option>Department A</option>
-                <option>Department B</option>
-                <option>Department C</option>
+                <option>A</option>
+                <option>B</option>
+                <option>C</option>
               </Select>
           </div>
           </div>
@@ -127,10 +163,16 @@ return (
             <div className="mt-1">
               <Select
                 id="permission"
-                name="permission"
+                value={updatedUser.permission || ''}
+                onChange={(event) =>
+                  setUpdatedUser((prevUser) => ({
+                    ...prevUser,
+                    permission: event.target.value
+                  }))}
               >
                 <option>Staff</option>
                 <option>QA</option>
+                <option>QAManager</option>
               </Select>
             </div>
           </div>
@@ -166,6 +208,7 @@ return (
             Close
           </button>
           <button
+          onClick={handleSave}
             type="button"
             class="pb-2 uppercase text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
             data-te-ripple-init
