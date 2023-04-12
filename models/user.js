@@ -17,7 +17,8 @@ const userSchema = new mongoose.Schema({
   gender: {
     type: String,
     enum: ['Male', 'Female'],
-    required: true
+    required: true,
+    default: 'Male'
   },
   image: {
     type: String,
@@ -32,12 +33,14 @@ const userSchema = new mongoose.Schema({
   department: {
     type: String,
     enum: ['A', 'B', 'C'],
-    required: true
+    required: true,
+    default: 'A'
   },
   permission: {
     type: String,
     enum: ['QAManager', 'QA', 'Staff'],
-    required: true
+    required: true,
+    default: 'QAManager'
   }
 }, { timestamps: true });
 

@@ -1,5 +1,4 @@
 const User = require('../models/User');
-
 // Get all users
 const getUsers = async (req, res) => {
     try {
@@ -53,7 +52,7 @@ const createUser = async (req, res) => {
       const { email, fullname, gender, image, password, department, permission } = req.body;
   
       // Check if user exists
-      const existingUser = await User.findById(userId);
+      const existingUser = await User.findByIdAndUpdate(req.params.id).exec();
       if (!existingUser) {
         return res.status(404).json({ message: 'User not found' });
       }
@@ -80,21 +79,17 @@ const createUser = async (req, res) => {
 
 // Delete a user by ID
 const deleteUser = async (req, res, userId) => {
-    try {
-      // Check if user exists
-      const existingUser = await User.findById(userId);
-      if (!existingUser) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-  
-      // Delete user from database
-      await existingUser.remove();
-  
-      res.json({ message: 'User deleted' });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Server error' });
+  try {
+    // Check if user exists
+    const existingUser = await User.findByIdAndDelete(req.params.id).exec();
+    if (!existingUser) {
+      return res.status(404).json({ message: 'User not found' });
     }
+    res.json({ message: 'User deleted' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
   };
 
 module.exports={
