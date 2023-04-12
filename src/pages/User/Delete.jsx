@@ -3,6 +3,7 @@ import { HiOutlineExclamationCircle, HiTrash } from "react-icons/hi"
 
 export default function DeleteUser(props){
   const { user, onDeleteUser, onCancelDelete } = props;
+  
     return (
       <>
         <div
