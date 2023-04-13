@@ -57,7 +57,7 @@ export default function UserPage() {
 //AllUsersTable
 const AllUsersTable = ()=> {
   const [userList, setUserList] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
+
   useEffect(() => {
     async function fetchUser() {
       const users = await getUser();
@@ -72,19 +72,18 @@ const AllUsersTable = ()=> {
   useEffect(() => {
     setTableData(userList);
   }, [userList]);
-  // console.log(tableData.map(m => m.user.props))
   const [users, setUsers] = useState([]);
   const handleSaveRowEdits = async ({ exitEditingMode, row, values }) => {
     if (!Object.keys(validationErrors).length) {
       tableData[row.index] = values;
-      //send/receive api updates here, then refetch or update local table data for re-render
       setTableData([...tableData]);
-      exitEditingMode(); //required to exit editing mode and close modal
+      exitEditingMode(); 
     }
   };
   const [user, setUser] = useState({});
   const [success, setSuccess] = useState(false);
-  
+  const [selectedUser, setSelectedUser] = useState(null);
+
   const handleUpdateUser = async (id) => {
     console.log("id:", id);
     const userToUpdate = tableData.find((user) => user._id === id);
@@ -96,11 +95,9 @@ const AllUsersTable = ()=> {
         const response = await updateUser(_id, updatedUser);
         console.log(response);
         setSuccess(true);
- 
       } catch (error) {
         console.log(error);
       }
-      
     }
   };
   const handleSaveUser = (updatedUser) => {
@@ -124,8 +121,8 @@ const handleDeleteUser = async (id) => {
   window.location.reload()
   if (userToDelete) {
     try {
-      const { _id, ...user } = userToDelete; // Renamed the destructured variable
-      const response = await deleteUser(_id, user); // Used the new variable name
+      const { _id, ...user } = userToDelete;
+      const response = await deleteUser(_id, user); 
       console.log(response);
     } catch (error) {
       console.log(error);
