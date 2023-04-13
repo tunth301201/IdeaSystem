@@ -87,17 +87,19 @@ const AllUsersTable = ()=> {
   const handleUpdateUser = async (id) => {
     console.log("id:", id);
     const userToUpdate = tableData.find((user) => user._id === id);
+    if (!userToUpdate) {
+      console.log(`User with ID ${id} not found`);
+      return;
+    }
     setSelectedUser(userToUpdate);
-    console.log(id);
-    if (userToUpdate) {
-      try {
-        const { _id, ...updatedUser } = userToUpdate;
-        const response = await updateUser(_id, updatedUser);
-        console.log(response);
-        setSuccess(true);
-      } catch (error) {
-        console.log(error);
-      }
+    try {
+      const { _id, ...updatedUser } = userToUpdate;
+      const response = await updateUser(_id, updatedUser);
+      console.log(userToUpdate);
+      console.log(response);
+      setSuccess(true);
+    } catch (error) {
+      console.log(error);
     }
   };
   const handleSaveUser = (updatedUser) => {

@@ -8,7 +8,7 @@ import {
   TextInput,
   Select,
 } from "flowbite-react"
-import { useState } from "react"
+import { useEffect,useState } from "react"
 import {
   HiChevronLeft,
   HiChevronRight,
@@ -27,7 +27,8 @@ import {
 export default function EditUser(props) {
   const [updatedUser, setUpdatedUser] = useState(props.user);
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
+  const { name, value } = event.target;
+
     setUpdatedUser((prevUser) => {
       return {
         ...prevUser,
@@ -35,7 +36,9 @@ export default function EditUser(props) {
       };
     });
   };
-  
+  useEffect(() => {
+    setUpdatedUser(props.user);
+  }, [props.user]);  
   const handleSave = () => {
     console.log(updatedUser);
     props.onSaveUser(updatedUser);
