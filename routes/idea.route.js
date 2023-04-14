@@ -47,15 +47,15 @@ router.post('/upload', (req, res) => {
 router.post('/',middleware.auth, middleware.checkper("Staff"), ideaController.createIdea);
 
 // GET /ideas
-router.get('/',middleware.auth, middleware.checkper("Staff"), ideaController.getIdeas);
+router.get('/',middleware.auth, middleware.checkper("QAManager"), ideaController.getIdeas);
 
 // GET /ideas/:id
-router.get('/:id',middleware.auth, middleware.checkper("Staff"), ideaController.getOneIdea);
+router.get('/:id',middleware.auth, middleware.checkper("QAManager"), ideaController.getOneIdea);
 
 // PUT /ideas/:id
 router.put('/:id',middleware.auth, middleware.checkper("Staff"), ideaController.updateIdea);
 
 // DELETE /users/:id
-router.delete('/:id',middleware.auth, middleware.checkper("Staff"), ideaController.deleteIdea);
+router.delete('/:id',middleware.auth, middleware.checkper("QAManager"), ideaController.deleteIdea);
 
 module.exports = router;

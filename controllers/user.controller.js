@@ -20,7 +20,7 @@ const createUser = async (req, res) => {
       const { email, fullname, gender, image, password, department, permission } = req.body;
   
       // Check if user already exists
-      const existingUser = await User.findOne({ email });
+      const existingUser = await User.findOne({email: email});
       if (existingUser) {
         return res.status(409).json({ message: 'User already exists' });
       }
@@ -48,12 +48,12 @@ const createUser = async (req, res) => {
 
 
 // Update user
-  const updateUser = async (req, res, userId) => {
+  const updateUser = async (req, res) => {
     try {
       const { email, fullname, gender, image, password, department, permission } = req.body;
   
       // Check if user exists
-      const existingUser = await User.findById(userId);
+      const existingUser = await User.findByIdAndUpdate(req.params.id).exec();
       if (!existingUser) {
         return res.status(404).json({ message: 'User not found' });
       }
@@ -79,16 +79,13 @@ const createUser = async (req, res) => {
 
 
 // Delete a user by ID
-const deleteUser = async (req, res, userId) => {
+const deleteUser = async (req, res) => {
     try {
       // Check if user exists
-      const existingUser = await User.findById(userId);
+      const existingUser = await User.findByIdAndDelete(req.params.id).exec();
       if (!existingUser) {
         return res.status(404).json({ message: 'User not found' });
       }
-  
-      // Delete user from database
-      await existingUser.remove();
   
       res.json({ message: 'User deleted' });
     } catch (error) {

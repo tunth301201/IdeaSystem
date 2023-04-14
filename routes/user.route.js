@@ -10,7 +10,7 @@ router.post('/',middleware.auth, userController.createUser);
 router.get('/',middleware.auth, userController.getUsers);
 
 // PUT /users/:id
-router.put('/:id',middleware.auth, userController.updateUser);
+router.put('/:id',middleware.auth,middleware.checkper("QAManager"), userController.updateUser);
 
 // DELETE /users/:id
 router.delete('/:id',middleware.auth, userController.deleteUser);

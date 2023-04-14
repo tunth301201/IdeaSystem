@@ -23,6 +23,11 @@ const tagSchema = new mongoose.Schema({
     type: Date,
     required: false,
   },
+  user_id: {
+    type: mongoose.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
 }, { timestamps: true });
 
 const Tag = mongoose.model('Tag', tagSchema);

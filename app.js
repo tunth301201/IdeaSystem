@@ -8,6 +8,9 @@ const tagsRoute = require('./routes/tag.route');
 const commentsRoute = require('./routes/comment.route');
 const authRoute = require('./routes/auth.route');
 const { conn } = require('./config/db');
+const PORT = 8080;
+const cors = require("cors");
+
 
 // mongoose.connect('mongodb+srv://group1940:19401940@cluster0.txsa0qr.mongodb.net/IdeaSystem?retryWrites=true&w=majority', {
 //   useNewUrlParser: true,
@@ -16,6 +19,12 @@ const { conn } = require('./config/db');
 // .then(() => console.log('Connected to database'))
 // .catch((err) => console.log(err));
 
+const corsOptions ={
+  origin:'http://localhost:3000', 
+  credentials:true,            //access-control-allow-credentials:true
+  optionSuccessStatus:200,
+}
+app.use(cors(corsOptions));
 
 // Parse incoming JSON requests
 app.use(express.json());
@@ -37,7 +46,7 @@ app.use('/auth', authRoute);
 
 // Start the server
 conn.once('open', () => {
-  app.listen(3000, () => {
+  app.listen(PORT, () => {
     console.log('Server started on port 3000');
   });
 });

@@ -4,8 +4,7 @@ const Tag = require('../models/Tag');
 const getTags = async (req, res) => {
     try {
       // Retrieve all tags from database
-      const tags = await Tag.find();
-  
+      const tags = await Tag.find().populate("user_id", "fullname");
       res.json(tags);
     } catch (error) {
       console.error(error);
@@ -16,7 +15,7 @@ const getTags = async (req, res) => {
 // Create a new tag
 const createTag = async (req, res) => {
     try {
-      const {subject, description, start_dateOfTag, end_dateOfTag, end_dateOfIdea} = req.body;
+      const {subject, description, start_dateOfTag, end_dateOfTag, end_dateOfIdea, user_id} = req.body;
       // Create new tag object
       const newTag = new Tag({
         subject,
@@ -24,6 +23,7 @@ const createTag = async (req, res) => {
         start_dateOfTag,
         end_dateOfTag,
         end_dateOfIdea,
+        user_id
       });
   
       // Save tag to database

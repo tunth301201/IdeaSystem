@@ -4,14 +4,14 @@ const tagController = require('../controllers/tag.controller');
 const middleware=require('./../helpers/middleware');
 // POST /tags
 router.route('/')
-.post(middleware.auth,middleware.checkper("QA Manager"),tagController.createTag)
+.post(middleware.auth,middleware.checkper("QAManager"),tagController.createTag)
 // GET /tags
-.get(middleware.auth,middleware.checkper("QA Manager"),tagController.getTags)
+.get(middleware.auth,middleware.checkper("QAManager"),tagController.getTags)
 // GET /tag
 router.route('/:id')
-.get(middleware.auth,middleware.checkper("QA Manager"),tagController.getTag)
+.get(middleware.auth,middleware.checkper("QAManager"),tagController.getTag)
 // GET /delete tag
-.delete(middleware.auth,middleware.checkper("QA Manager"),tagController.deleteTag)
+.delete(middleware.auth,middleware.checkper("QAManager"),tagController.deleteTag)
 // GET /Edit tag
-.put(middleware.auth,middleware.checkper("QA Manager"),tagController.updateTag)
+.put(middleware.auth,middleware.checkper("QAManager"),tagController.updateTag)
 module.exports = router;
