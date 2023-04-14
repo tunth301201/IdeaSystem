@@ -65,28 +65,23 @@ const IdeaTable = function() {
     .catch(err => {
       console.log(err)
     })
-  })
+  }, [])
   
   const [tableData, setTableData] = useState([]);
   const [validationErrors, setValidationErrors] = useState({});
-  const [ideaID, setIdeaID] = useState("");
-  const [viewID, setViewID] = useState("")
+  const [data, setData] = useState("")
   const [row, setRow] = useState("");
 
-
-
-  const handleDelete = useCallback(async (row, id) => {
-    await deleteIdea(id)
+  const handleDelete = useCallback(async (row) => {
+    await deleteIdea(row.original._id)
       .then((response) => { 
-        tableData.splice(row, 1);
+        tableData.splice(row.index, 1);
         setTableData([...tableData]);
         })
       .catch((err)=>{
           console.log(err)
       })  
   }, [tableData])
-  
-  console.log(viewID)
 
   const handleSaveRowEdits = async ({ exitEditingMode, row, values }) => {
     if (!Object.keys(validationErrors).length) {
@@ -104,7 +99,7 @@ const IdeaTable = function() {
   const columns = useMemo(
     () => [
       {
-        accessorKey: 'tag',
+        accessorKey: 'tag_id',
         header: 'Tag',
         enableColumnOrdering: false,
         enableEditing: false, //disable editing on this column
@@ -112,7 +107,7 @@ const IdeaTable = function() {
         size: 80,
       },
       {
-        accessorKey: 'user',
+        accessorKey: 'user_id',
         header: 'User',
         size: 140,
         // muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
@@ -133,33 +128,6 @@ const IdeaTable = function() {
         // muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
         //   ...getCommonEditTextFieldProps(cell),
         //   type: 'email',
-        // }),
-      },
-      {
-        accessorKey: 'like',
-        header: 'Like',
-        size: 80,
-        // muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-        //   ...getCommonEditTextFieldProps(cell),
-        //   type: 'number',
-        // }),
-      },
-      {
-        accessorKey: 'dislike',
-        header: 'Dislike',
-        size: 80,
-        // muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-        //   ...getCommonEditTextFieldProps(cell),
-        //   type: 'number',
-        // }),
-      },
-      {
-        accessorKey: 'document',
-        header: 'Document',
-        size: 80,
-        // muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-        //   ...getCommonEditTextFieldProps(cell),
-        //   type: 'number',
         // }),
       },
       {
@@ -195,8 +163,8 @@ const IdeaTable = function() {
         onEditingRowCancel={handleCancelRowEdits}
         renderRowActions={({ row, table }) => (
           <Box sx={{ display: 'flex', gap: '1rem' }}>
-            <Tooltip arrow placement="left" title="Delete">
-              <IconButton onClick={() => {return setViewID(row.original._id)}}>
+            <Tooltip arrow placement="left" title="View">
+              <IconButton onClick={() => {return setData(row.original)}}>
                 <button
                   type="button"
                   class="cursor text-blue-700"
@@ -209,7 +177,7 @@ const IdeaTable = function() {
               </IconButton>
             </Tooltip>
             <Tooltip arrow placement="right" title="Delete">
-              <IconButton onClick={() => {return setRow(row), setIdeaID(row.original._id)}}>
+              <IconButton onClick={() => {return setRow(row)}}>
                 <button
                   type="button"
                   class="cursor text-red-700"
@@ -233,14 +201,8 @@ const IdeaTable = function() {
         //   </Button>
         // )}
       />
-      <DeleteIdea handleDelete={() => handleDelete(row, ideaID)}/>
-      <ViewIdea />
-      {/* <CreateNewAccountModal
-        columns={columns}
-        open={createModalOpen}
-        onClose={() => setCreateModalOpen(false)}
-        onSubmit={handleCreateNewRow}
-      /> */}
+      <DeleteIdea handleDelete={() => handleDelete(row)}/>
+      <ViewIdea data={data} />
     </>
   );
 }

@@ -3,7 +3,8 @@ import { React, useState } from "react";
 import { Label, Textarea, TextInput } from "flowbite-react";
 import * as te from 'tw-elements';
 
-export default function ViewIdea() {
+export default function ViewIdea({data}) {
+
     return (
       <>
         <div
@@ -55,6 +56,7 @@ export default function ViewIdea() {
                         placeholder='#'
                         readOnly
                         className="mt-1"
+                        value={data.tag_id}
                       />
                     </div>
                     <div>
@@ -66,6 +68,7 @@ export default function ViewIdea() {
                         readOnly
                         placeholder="#"
                         className="mt-1"
+                        value={data.user_id}
                       />
                     </div>
                     <div>
@@ -77,6 +80,7 @@ export default function ViewIdea() {
                         type="text"
                         placeholder="#"
                         className="mt-1"
+                        value={data.title}
                       />
                     </div>
                     <div>
@@ -88,6 +92,7 @@ export default function ViewIdea() {
                         readOnly
                         placeholder="#"
                         className="mt-1"
+                        value={data.content}
                       />
                     </div>
                     <div>
@@ -99,6 +104,7 @@ export default function ViewIdea() {
                         readOnly
                         placeholder="#"
                         className="mt-1"
+                        value={data.like}
                       />
                     </div>
                     <div>
@@ -110,17 +116,19 @@ export default function ViewIdea() {
                         readOnly
                         placeholder="#"
                         className="mt-1"
+                        value={data.dislike}
                       />
                     </div>
                     <div>
-                      <Label htmlFor="document">Document</Label>
+                      <Label htmlFor="documents">Documents</Label>
                       <TextInput
-                        id="document"
-                        name="document"
+                        id="documents"
+                        name="documents"
                         type="text"
                         readOnly
                         placeholder="#"
                         className="mt-1"
+                        value={data.documents}
                       />
                     </div>
                     <div>
@@ -132,6 +140,7 @@ export default function ViewIdea() {
                         readOnly
                         placeholder="#"
                         className="mt-1"
+                        value={data.view_time}
                       />
                     </div>
                   </div>

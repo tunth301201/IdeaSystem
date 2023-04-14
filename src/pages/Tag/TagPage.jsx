@@ -58,11 +58,11 @@ export default function TagPage() {
   const TagsTable = function() {
   
   const [tableData, setTableData] = useState([]);
-  const [validationErrors, setValidationErrors] = useState({});
+  const [user_id, setUser_id] = useState("");
+  const [editRow, setEditRow] = useState("")
+  const [row, setRow] = useState("");
+  const [data, setData] = useState("");
 
-  const [user_id, setUser_id] = useState('')
-  const [row, setRow] = useState('')
-  const [data, setData] = useState('')
   useEffect(() => {
     if (decodeJwt().id !== "") {
       setUser_id(decodeJwt()?.id)
@@ -79,26 +79,13 @@ export default function TagPage() {
   const handleDelete = useCallback(async (row) => {
     await deleteTag(row.original._id)
       .then((response) => { 
-        tableData.splice(row, 1);
+        tableData.splice(row.index, 1);
         setTableData([...tableData]);
         })
       .catch((err)=>{
           console.log(err)
       })  
   }, [tableData])
-
-  const handleSaveRowEdits = async ({ exitEditingMode, row, values }) => {
-    if (!Object.keys(validationErrors).length) {
-      tableData[row.index] = values;
-      //send/receive api updates here, then refetch or update local table data for re-render
-      setTableData([...tableData]);
-      exitEditingMode(); //required to exit editing mode and close modal
-    }
-  };
-
-  const handleCancelRowEdits = () => {
-    setValidationErrors({});
-  };
 
   const columns = useMemo(() => [
     {
@@ -172,12 +159,10 @@ export default function TagPage() {
         data={tableData || []}
         enableEditing
         enableColumnOrdering
-        onEditingRowSave={handleSaveRowEdits}
-        onEditingRowCancel={handleCancelRowEdits}
         renderRowActions={({ row, table }) => (
           <Box sx={{ display: 'flex', gap: '1rem' }}>
             <Tooltip arrow placement="left" title="Edit">
-              <IconButton onClick={() => {return setData(row.original)}}> 
+              <IconButton onClick={() => {return setData(row.original), setEditRow(row)}}> 
                 <button
                   type="button"
                   class="text-blue-700"
@@ -223,6 +208,9 @@ export default function TagPage() {
       <EditTag 
         data={data}
         setData={setData}
+        tableData={tableData}
+        setTableData={setTableData}
+        editRow={editRow}
       />
       <DeleteTag handleDelete={() => handleDelete(row)}/>
     </>

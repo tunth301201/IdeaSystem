@@ -69,6 +69,7 @@ const AllUsersTable = function() {
   
   const [tableData, setTableData] = useState([]);
   const [validationErrors, setValidationErrors] = useState({});
+  const [editRow, setEditRow] = useState("")
   const [row, setRow] = useState("");
   const [data, setData] = useState("");
 
@@ -175,7 +176,7 @@ const AllUsersTable = function() {
         renderRowActions={({ row, table }) => (
           <Box sx={{ display: 'flex', gap: '1rem' }}>
             <Tooltip arrow placement="left" title="Edit"
-              onClick={() => { return setData(row.original) }}>
+              onClick={() => { return setData(row.original), setEditRow(row)}}>
               <IconButton> 
                 <span
                   type="button"
@@ -219,6 +220,9 @@ const AllUsersTable = function() {
       <EditUser 
         data={data}
         setData={setData}
+        tableData={tableData}
+        setTableData={setTableData}
+        editRow={editRow}
       />
       <DeleteUser handleDelete={() => handleDelete(row)}/>
     </>

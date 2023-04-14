@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useCallback } from "react";
 import {
     Breadcrumb,
     Button,
@@ -11,10 +11,8 @@ import {
 } from "flowbite-react";
 import { updateTag } from "../../api/apiServices";
 
-export default function EditTag({data, setData}){
+export default function EditTag({data, setData, tableData, setTableData, editRow}){
   
-  console.log(data)
-
   const handleChangeInput = (e) => {
     let {name, value} = e.target;
     setData({...data, [name]: value})
@@ -30,13 +28,18 @@ export default function EditTag({data, setData}){
     formData.append("start_dateOfTag", data.start_dateOfTag)
     formData.append("end_dateOfTag", data.end_dateOfTag)
     formData.append("end_dateOfIdea", data.end_dateOfIdea)
+    formData.append("user_id", data.user_id)
 
-    return updateTag(data._id, formData)
+    const parseData = JSON.stringify(Object.fromEntries(formData))
+    tableData[editRow.index] = JSON.parse(parseData);
+
+    return updateTag(data._id, parseData)
       .then(res => {
         console.log(res)
+        setTableData([...tableData]);
       })
       .catch((err)=>{
-          console.log(err)
+        console.log(err)
       })  
   }
   

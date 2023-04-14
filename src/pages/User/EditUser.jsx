@@ -25,7 +25,7 @@ import {
 } from "react-icons/hi";
 import { updateUser } from "../../api/apiServices";
 
-export default function EditUser({data, setData}) {
+export default function EditUser({data, setData, tableData, setTableData, editRow}) {
 
   const handleChangeInput = (e) => {
     let {name, value} = e.target;
@@ -44,9 +44,13 @@ export default function EditUser({data, setData}) {
     formData.append("department", data.department);
     formData.append("image", data.image);
 
+    const parseData = JSON.stringify(Object.fromEntries(formData))
+    tableData[editRow.index] = JSON.parse(parseData);
+
     return await updateUser(data._id, formData)
       .then(res => {
         console.log(res)
+        setTableData([...tableData]);
       })
       .catch((err)=>{
         console.log(err)
@@ -158,9 +162,9 @@ export default function EditUser({data, setData}) {
                   value={data.department}
                   onChange={handleChangeInput}
                 >
-                  <option>Department A</option>
-                  <option>Department B</option>
-                  <option>Department C</option>
+                  <option>A</option>
+                  <option>B</option>
+                  <option>C</option>
                 </Select>
             </div>
             </div>
@@ -175,10 +179,11 @@ export default function EditUser({data, setData}) {
                 >
                   <option>Staff</option>
                   <option>QA</option>
+                  <option>QAManager</option>
                 </Select>
               </div>
             </div>
-              <div className="lg:col-span-2">
+              {/* <div className="lg:col-span-2">
                 <div className="flex w-full items-center justify-center">
                   <label className="flex h-32 w-full cursor-pointer flex-col rounded border-2 border-dashed border-gray-300 hover:bg-gray-50 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-700">
                     <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -197,7 +202,7 @@ export default function EditUser({data, setData}) {
                       />
                   </label>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
           <div

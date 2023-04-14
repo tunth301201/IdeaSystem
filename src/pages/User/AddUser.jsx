@@ -215,7 +215,7 @@ export default function AddUser({data, setData}) {
                   </Select>
                 </div>
               </div>
-                <div className="lg:col-span-2">
+                {/* <div className="lg:col-span-2">
                   <div className="flex w-full items-center justify-center">
                     <label className="flex h-32 w-full cursor-pointer flex-col rounded border-2 border-dashed border-gray-300 hover:bg-gray-50 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-700">
                       <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -252,7 +252,7 @@ export default function AddUser({data, setData}) {
                         
                     </label>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </form>
