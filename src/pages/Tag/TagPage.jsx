@@ -60,16 +60,9 @@ export default function TagPage() {
   const [tableData, setTableData] = useState([]);
   const [validationErrors, setValidationErrors] = useState({});
 
-  let [deleteTagID, setDeleteTagID] = useState("")
-  let [tagID, setTagID] = useState("")
-  let [subject, setSubject] = useState("")
-  let [description, setDescription] = useState("")
-  let [start_dateOfTag, setStart_dateOfTag] = useState("")
-  let [end_dateOfTag, setEnd_dateOfTag] = useState("")
-  let [end_dateOfIdea, setEnd_dateOfIdea] = useState("")
-  let [user_id, setUser_id] = useState('')
+  const [user_id, setUser_id] = useState('')
   const [row, setRow] = useState('')
-
+  const [data, setData] = useState('')
   useEffect(() => {
     if (decodeJwt().id !== "") {
       setUser_id(decodeJwt()?.id)
@@ -83,8 +76,8 @@ export default function TagPage() {
       }) 
   }, [tableData.length])
 
-  const handleDelete = useCallback(async (row, id) => {
-    await deleteTag(id)
+  const handleDelete = useCallback(async (row) => {
+    await deleteTag(row.original._id)
       .then((response) => { 
         tableData.splice(row, 1);
         setTableData([...tableData]);
@@ -184,7 +177,7 @@ export default function TagPage() {
         renderRowActions={({ row, table }) => (
           <Box sx={{ display: 'flex', gap: '1rem' }}>
             <Tooltip arrow placement="left" title="Edit">
-              <IconButton onClick={() => {return setTagID(row.original._id), setSubject(row.original.subject), setDescription(row.original.description), setStart_dateOfTag(row.original.start_dateOfTag), setEnd_dateOfTag(row.original.end_dateOfTag), setEnd_dateOfIdea(row.original.end_dateOfIdea)}}> 
+              <IconButton onClick={() => {return setData(row.original)}}> 
                 <button
                   type="button"
                   class="text-blue-700"
@@ -197,7 +190,7 @@ export default function TagPage() {
               </IconButton>
             </Tooltip>
             <Tooltip arrow placement="right" title="Delete">
-              <IconButton color="error" onClick={() => {return setDeleteTagID(row.original._id), setRow(row.index)}}>
+              <IconButton color="error" onClick={() => {return setRow(row)}}>
                 <button
                   type="button"
                   class="text-red-700"
@@ -228,19 +221,10 @@ export default function TagPage() {
         setData={setTableData}
         user_id={user_id}/>
       <EditTag 
-        id={tagID} 
-        subject={subject} 
-        description={description} 
-        start_dateOfTag={start_dateOfTag}
-        end_dateOfTag={end_dateOfTag}
-        end_dateOfIdea={end_dateOfIdea} 
-        changeDes={setDescription}
-        changeSub={setSubject}
-        changeSDT={setStart_dateOfTag}
-        changeEDT={setEnd_dateOfTag}
-        changeEDI={setEnd_dateOfIdea}
+        data={data}
+        setData={setData}
       />
-      <DeleteTag handleDelete={() => handleDelete(row, deleteTagID)}/>
+      <DeleteTag handleDelete={() => handleDelete(row)}/>
     </>
   )
 }

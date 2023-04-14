@@ -56,57 +56,6 @@ export default function UserPage() {
 }
 
 const AllUsersTable = function() {
-  
-  // const userList = [
-  //   {
-  //     image: <RenderImg img={"https://i.scdn.co/image/ab6761610000e5ebcdce7620dc940db079bf4952"}/>,
-  //     name:"Ariana Grande" ,
-  //     email: "arianagrande@gmail.com",
-  //     permission: "QA Manager",
-  //     gender: "Female",
-  //     department: "Department A" 
-  //   },
-  //   {
-  //     image: <RenderImg img={"https://media1.popsugar-assets.com/files/thumbor/lcn_wDi1eGsJ5E-sOnR4cfZdKJw/0x68:2312x2380/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2020/03/03/018/n/1922398/03ad07805e5ee78bbd70d3.36131857_/i/Emma-Stone.jpg"}/>,
-  //     name: "Emma Stone",
-  //     email: "emmastone@gmail.com",
-  //     permission: "QA",
-  //     gender: "Female",
-  //     department: "Department B" 
-  //   },
-  //   {
-  //     image: <RenderImg img={"https://media1.popsugar-assets.com/files/thumbor/5HcZqJL9BiCSn4aLp6rjj3l3CTM/144x83:1984x1923/fit-in/728xorig/filters:format_auto-!!-:strip_icc-!!-/2020/02/24/897/n/1922398/582a03955e5432c1e88d95.90383166_/i/Katy-Perry.jpg"}/>,
-  //     name: "Katy Perry",
-  //     email: "katyperry@gmail.com",
-  //     permission: "Admin",
-  //     gender: "Female",
-  //     department: "Department C" 
-  //   },
-  //   {
-  //     image: <RenderImg img={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0AHgiK1harDlnQqxE2RKXGHeyPHwBDbA4EQ&usqp=CAU"} />,
-  //     name: "Sam Smith",
-  //     email: "samsmith@gmail.com",
-  //     permission: "Staff",
-  //     gender: "Male",
-  //     department: "Department A" 
-  //   },
-  //   {
-  //     image: <RenderImg img={"https://cdn.smehost.net/2020sonymusiccouk-ukprod/wp-content/uploads/2019/10/30311ded2aa378d2c4ad67909493fdfe.jpg"}/>,
-  //     name: "G-Eazy",
-  //     email: "g-eazy@gmail.com",
-  //     permission: "Admin",
-  //     gender: "Male",
-  //     department: "Department B" 
-  //   },
-  //   { 
-  //     image: <RenderImg img={"https://www.grazia-magazin.de/sites/default/files/styles/amp_image_ratio_1x1/public/teaser/05.01.2018/justintimberlake.jpg"}/>,
-  //     name: "Justin Timberlake",
-  //     email: "justintimberlake@gmail.com",
-  //     permission: "Staff",
-  //     gender: "Male",
-  //     department: "Department C" 
-  //   }
-  // ]
 
   useEffect( () => {
      getUsers()
@@ -118,29 +67,15 @@ const AllUsersTable = function() {
       })
   }, [])
   
-  const [createModalOpen, setCreateModalOpen] = useState(false);
   const [tableData, setTableData] = useState([]);
   const [validationErrors, setValidationErrors] = useState({});
-  const [deleteUserID, setDeleteUserID] = useState("");
   const [row, setRow] = useState("");
-  const [userID, setUserID] = useState("")
-  const [email, setEmail] = useState("")
-  const [fullname, setFullname] = useState("")
-  const [gender, setGender] = useState("")
-  const [image, setImage] = useState("")
-  const [password, setPassword] = useState("")
-  const [permission, setPermission] = useState("")
-  const [department, setDepartment] = useState("")
+  const [data, setData] = useState("");
 
-  const handleCreateNewRow = (values) => {
-    tableData.push(values);
-    setTableData([...tableData]);
-  }
-
-  const handleDelete = useCallback(async (row, id) => {
-    await deleteUser(id)
+  const handleDelete = useCallback(async (row) => {
+    await deleteUser(row.original._id)
       .then((response) => { 
-        tableData.splice(row, 1);
+        tableData.splice(row.index, 1);
         setTableData([...tableData]);
         })
       .catch((err)=>{
@@ -240,16 +175,7 @@ const AllUsersTable = function() {
         renderRowActions={({ row, table }) => (
           <Box sx={{ display: 'flex', gap: '1rem' }}>
             <Tooltip arrow placement="left" title="Edit"
-              onClick={() => {
-                return setUserID(row.original._id), 
-                  setEmail(row.original.email),
-                  setFullname(row.original.fullname),
-                  setGender(row.original.gender),
-                  setImage(row.original.image),
-                  setPassword(row.original.password),
-                  setDepartment(row.original.department),
-                  setPermission(row.original.permission)
-              }}>
+              onClick={() => { return setData(row.original) }}>
               <IconButton> 
                 <span
                   type="button"
@@ -263,7 +189,7 @@ const AllUsersTable = function() {
               </IconButton>
             </Tooltip>
             <Tooltip arrow placement="right" title="Delete">
-              <IconButton color="error" onClick={() => {return setDeleteUserID(row.original._id), setRow(row.index)}}>
+              <IconButton color="error" onClick={() => {return setRow(row)}}>
                 <span
                   type="button"
                   className="cursor text-red-700"
@@ -291,23 +217,10 @@ const AllUsersTable = function() {
       />
       <AddUser data={tableData} setData={setTableData} />
       <EditUser 
-        id={userID}
-        email={email}
-        fullname={fullname}
-        gender={gender}
-        image={image}
-        password={password}
-        department={department}
-        permission={permission}
-        changeEmail={setEmail}
-        changeName={setFullname}
-        changeGender={setGender}
-        changeImage={setImage}
-        changePass={setImage}
-        changeDepart={setDepartment}
-        changePermiss={setPermission}
+        data={data}
+        setData={setData}
       />
-      <DeleteUser handleDelete={() => handleDelete(row, deleteUserID)}/>
+      <DeleteUser handleDelete={() => handleDelete(row)}/>
     </>
   )
 }

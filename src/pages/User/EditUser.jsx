@@ -25,22 +25,26 @@ import {
 } from "react-icons/hi";
 import { updateUser } from "../../api/apiServices";
 
-export default function EditUser(props) {
+export default function EditUser({data, setData}) {
+
+  const handleChangeInput = (e) => {
+    let {name, value} = e.target;
+    setData({...data, [name]: value})
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const formData = new FormData();
-    formData.append("id", props.id)
-    formData.append("fullname", props.fullname)
-    formData.append("email", props.email)
-    formData.append("gender", props.gender)
-    formData.append("image", props.image)
-    formData.append("password", props.password)
-    formData.append("department", props.department)
-    formData.append("permission", props.permission)
+    formData.append("id", data._id)
+    formData.append("fullname", data.fullname);
+    formData.append("email", data.email);
+    formData.append("gender", data.gender);
+    formData.append("password", data.password);
+    formData.append("permission", data.permission);
+    formData.append("department", data.department);
+    formData.append("image", data.image);
 
-    return await updateUser(props.id, formData)
+    return await updateUser(data._id, formData)
       .then(res => {
         console.log(res)
       })
@@ -95,14 +99,15 @@ export default function EditUser(props) {
           <div class="relative p-4">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <Label htmlFor="name">Name</Label>
+              <Label htmlFor="fullname">Name</Label>
               <div className="mt-1">
                     <TextInput
-                    id="name"
-                    name="name"
+                    id="fullname"
+                    name="fullname"
+                    type="text"
                     placeholder="Ariana Grande"
-                    value={props.fullname}
-                    onChange={(e) => props.changeName(e.target.value)}
+                    value={data.fullname}
+                    onChange={handleChangeInput}
                     />
               </div>
             </div>
@@ -112,8 +117,8 @@ export default function EditUser(props) {
                   <TextInput 
                     id="password" 
                     name="password" 
-                    value={props.password}
-                    onChange={(e) => props.changePass(e.target.value)}
+                    value={data.password}
+                    onChange={handleChangeInput}
                     placeholder="123123213" />
               </div>
             </div>
@@ -125,8 +130,8 @@ export default function EditUser(props) {
                     name="email"
                     placeholder="example@company.com"
                     type="email"
-                    value={props.email}
-                    onChange={(e) => props.changeEmail(e.target.value)}
+                    value={data.email}
+                    onChange={handleChangeInput}
                   />
               </div>
             </div>
@@ -136,8 +141,8 @@ export default function EditUser(props) {
                   <Select
                       id="gender"
                       name="gender"
-                      value={props.gender}
-                      onChange={(e) => props.changeGender(e.target.value)}
+                      value={data.gender}
+                      onChange={handleChangeInput}
                   >
                       <option>Female</option>
                       <option>Male</option>
@@ -150,8 +155,8 @@ export default function EditUser(props) {
                 <Select
                   id="department"
                   name="department"
-                  value={props.department}
-                  onChange={(e) => props.changeDepart(e.target.value)}
+                  value={data.department}
+                  onChange={handleChangeInput}
                 >
                   <option>Department A</option>
                   <option>Department B</option>
@@ -165,8 +170,8 @@ export default function EditUser(props) {
                 <Select
                   id="permission"
                   name="permission"
-                  value={props.permission}
-                  onChange={(e) => props.changePermiss(e.target.value)}
+                  value={data.permission}
+                  onChange={handleChangeInput}
                 >
                   <option>Staff</option>
                   <option>QA</option>
@@ -188,7 +193,7 @@ export default function EditUser(props) {
                     <input 
                       type="file" 
                       className="hidden"
-                      onChange={(e) => props.changeImage(e.target.files[0])}
+                      onChange={handleChangeInput}
                       />
                   </label>
                 </div>

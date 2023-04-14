@@ -7,8 +7,8 @@ const config = {
   },
 }
 
-localStorage.setItem('Authentication', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjY0MzQ4Mzc5ZTg5OTg4N2UwNjNiNGQ1NSIsImVtYWlsIjoibmd1eWVudm9AZ21haWwuY29tIiwiZnVsbG5hbWUiOiJuZ3V5ZW52byIsImdlbmRlciI6Ik1hbGUiLCJpbWFnZSI6ImRlZmF1bHQuanBnIiwicGFzc3dvcmQiOiIkMmIkMTAkeHN3S1RjUi5ORXB1WVhwVk1JNTF1LjdGOGtUcGlBaWphYzdjbDFCejMyRmZPWE1wWlAvaVciLCJkZXBhcnRtZW50IjoiQSIsInBlcm1pc3Npb24iOiJRQU1hbmFnZXIiLCJjcmVhdGVkQXQiOiIyMDIzLTA0LTEwVDIxOjQ1OjI5LjMxNFoiLCJ1cGRhdGVkQXQiOiIyMDIzLTA0LTEwVDIxOjQ1OjI5LjMxNFoiLCJfX3YiOjB9LCJpYXQiOjE2ODEzNzk1OTMsImV4cCI6MTY4MTQyMjc5M30.6SqSrKh9ExA_jLTNjyiQkDQdie5l8_e9VHLG05x5U4A");
-axios.defaults.headers.common['Authorization'] = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjY0MzQ4Mzc5ZTg5OTg4N2UwNjNiNGQ1NSIsImVtYWlsIjoibmd1eWVudm9AZ21haWwuY29tIiwiZnVsbG5hbWUiOiJuZ3V5ZW52byIsImdlbmRlciI6Ik1hbGUiLCJpbWFnZSI6ImRlZmF1bHQuanBnIiwicGFzc3dvcmQiOiIkMmIkMTAkeHN3S1RjUi5ORXB1WVhwVk1JNTF1LjdGOGtUcGlBaWphYzdjbDFCejMyRmZPWE1wWlAvaVciLCJkZXBhcnRtZW50IjoiQSIsInBlcm1pc3Npb24iOiJRQU1hbmFnZXIiLCJjcmVhdGVkQXQiOiIyMDIzLTA0LTEwVDIxOjQ1OjI5LjMxNFoiLCJ1cGRhdGVkQXQiOiIyMDIzLTA0LTEwVDIxOjQ1OjI5LjMxNFoiLCJfX3YiOjB9LCJpYXQiOjE2ODEzNzk1OTMsImV4cCI6MTY4MTQyMjc5M30.6SqSrKh9ExA_jLTNjyiQkDQdie5l8_e9VHLG05x5U4A";
+localStorage.setItem('Authentication', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjY0MzQ4Mzc5ZTg5OTg4N2UwNjNiNGQ1NSIsImVtYWlsIjoibmd1eWVudm9AZ21haWwuY29tIiwiZnVsbG5hbWUiOiJuZ3V5ZW52byIsImdlbmRlciI6Ik1hbGUiLCJpbWFnZSI6ImRlZmF1bHQuanBnIiwicGFzc3dvcmQiOiIkMmIkMTAkeHN3S1RjUi5ORXB1WVhwVk1JNTF1LjdGOGtUcGlBaWphYzdjbDFCejMyRmZPWE1wWlAvaVciLCJkZXBhcnRtZW50IjoiQSIsInBlcm1pc3Npb24iOiJRQU1hbmFnZXIiLCJjcmVhdGVkQXQiOiIyMDIzLTA0LTEwVDIxOjQ1OjI5LjMxNFoiLCJ1cGRhdGVkQXQiOiIyMDIzLTA0LTEwVDIxOjQ1OjI5LjMxNFoiLCJfX3YiOjB9LCJpYXQiOjE2ODE0NzU2OTYsImV4cCI6MTY4MTUxODg5Nn0.hUEORlh9ftNEr8I04QpyPjsGGS1DwhPPo2vssM-xkJE");
+axios.defaults.headers.common['Authorization'] = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjY0MzQ4Mzc5ZTg5OTg4N2UwNjNiNGQ1NSIsImVtYWlsIjoibmd1eWVudm9AZ21haWwuY29tIiwiZnVsbG5hbWUiOiJuZ3V5ZW52byIsImdlbmRlciI6Ik1hbGUiLCJpbWFnZSI6ImRlZmF1bHQuanBnIiwicGFzc3dvcmQiOiIkMmIkMTAkeHN3S1RjUi5ORXB1WVhwVk1JNTF1LjdGOGtUcGlBaWphYzdjbDFCejMyRmZPWE1wWlAvaVciLCJkZXBhcnRtZW50IjoiQSIsInBlcm1pc3Npb24iOiJRQU1hbmFnZXIiLCJjcmVhdGVkQXQiOiIyMDIzLTA0LTEwVDIxOjQ1OjI5LjMxNFoiLCJ1cGRhdGVkQXQiOiIyMDIzLTA0LTEwVDIxOjQ1OjI5LjMxNFoiLCJfX3YiOjB9LCJpYXQiOjE2ODE0NzU2OTYsImV4cCI6MTY4MTUxODg5Nn0.hUEORlh9ftNEr8I04QpyPjsGGS1DwhPPo2vssM-xkJE";
 
 const addTag = async (data) => {
   return await axios.post("http://localhost:8080/tags", data, config)
@@ -97,7 +97,17 @@ const deleteUser = async (id) => {
 const getAllIdeas = async () => {
   return await axios.get("http://localhost:8080/ideas", config)
     .then(res => {
-        return res?.data
+        return res.data
+    })
+    .catch(err => {
+        console.log(err)
+    })
+}
+
+const deleteIdea = async (id) => {
+  return await axios.delete(`http://localhost:8080/ideas/${id}`, config)
+    .then(res => {
+        return res
     })
     .catch(err => {
         console.log(err)
@@ -114,5 +124,7 @@ export {
     addUser,
     getUsers,
     deleteUser,
-    updateUser
+    updateUser,
+    getAllIdeas,
+    deleteIdea
 }

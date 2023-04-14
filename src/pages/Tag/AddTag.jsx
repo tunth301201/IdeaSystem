@@ -6,29 +6,28 @@ import { useEffect } from "react";
 
 
 export default function AddTag({user_id, data, setData}) {
-  const [subject, setSubject] = useState("")
-  const [description, setDescription] = useState("")
-  const [start_dateOfTag, setStart_dateOfTag] = useState("")
-  const [end_dateOfTag, setEnd_dateOfTag] = useState("")
-  const [end_dateOfIdea, setEnd_dateOfIdea] = useState("")
+  const [tag, setTag] = useState({
+    subject: "",
+    description: "", 
+    start_dateOfTag: "",
+    end_dateOfTag: "",
+    end_dateOfIdea: ""
+  })
 
-  // const [error, setError] = useState({
-  //   subject: "",
-  //   description: "",
-  //   start_dateOfTag: "",
-  //   end_dateOfTag: "",
-  //   end_dateOfIdea: ""
-  // });
+  const handleChangeInput = (e) => {
+    let {name, value} = e.target;
+    setTag({...tag, [name]: value})
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("subject", subject)
-    formData.append("description", description)
-    formData.append("start_dateOfTag", start_dateOfTag)
-    formData.append("end_dateOfTag", end_dateOfTag)
-    formData.append("end_dateOfIdea", end_dateOfIdea)
+    formData.append("subject", tag.subject)
+    formData.append("description", tag.description)
+    formData.append("start_dateOfTag", tag.start_dateOfTag)
+    formData.append("end_dateOfTag", tag.end_dateOfTag)
+    formData.append("end_dateOfIdea", tag.end_dateOfIdea)
     formData.append("user_id", user_id)
 
     await addTag(formData)
@@ -93,45 +92,50 @@ export default function AddTag({user_id, data, setData}) {
                       <TextInput
                         id="subject"
                         name="subject"
+                        type="text"
                         placeholder='Famous'
                         className="mt-1"
-                        onChange={(e) => setSubject(e.target.value)}
+                        value={tag.subject}
+                        onChange={handleChangeInput}
                       />
                       {/* <p class="mt-1 text-sm text-green-600 dark:text-green-500"> 
                         Username available!
                       </p> */}
                     </div>
                     <div>
-                      <Label htmlFor="ideaenddate">Idea's end date</Label>
+                      <Label htmlFor="end_dateOfIdea">Idea's end date</Label>
                       <TextInput
-                        id="ideaenddate"
-                        name="ideaenddate"
+                        id="end_dateOfIdea"
+                        name="end_dateOfIdea"
                         type="date"
                         placeholder="mm/dd/yyyy"
                         className="mt-1"
-                        onChange={(e) => setEnd_dateOfIdea(e.target.value)}
+                        value={tag.end_dateOfIdea}
+                        onChange={handleChangeInput}
                       />
                     </div>
                     <div>
-                      <Label htmlFor="startdate">Start date</Label>
+                      <Label htmlFor="start_dateOfTag">Start date</Label>
                       <TextInput
-                        id="startdate"
-                        name="startdate"
+                        id="start_dateOfTag"
+                        name="start_dateOfTag"
                         type="date"
                         placeholder="mm/dd/yyyy"
                         className="mt-1"
-                        onChange={(e) => setStart_dateOfTag(e.target.value)}
+                        value={tag.start_dateOfTag}
+                        onChange={handleChangeInput}
                       />
                     </div>
                     <div>
-                      <Label htmlFor="enddate">End date</Label>
+                      <Label htmlFor="end_dateOfTag">End date</Label>
                       <TextInput
-                        id="enddate"
-                        name="enddate"
+                        id="end_dateOfTag"
+                        name="end_dateOfTag"
                         type="date"
                         placeholder="mm/dd/yyyy"
                         className="mt-1"
-                        onChange={(e) => setEnd_dateOfTag(e.target.value)}
+                        value={tag.end_dateOfTag}
+                        onChange={handleChangeInput}
                       />
                     </div>
                     <div className="lg:col-span-2">
@@ -142,7 +146,8 @@ export default function AddTag({user_id, data, setData}) {
                         placeholder="Old topic"
                         rows={6}
                         className="mt-1"
-                        onChange={(e) => setDescription(e.target.value)}
+                        value={tag.description}
+                        onChange={handleChangeInput}
                       />
                     </div>
                   </div>

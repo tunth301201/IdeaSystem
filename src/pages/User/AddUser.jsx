@@ -9,30 +9,26 @@ import {
     Select,
 } from "flowbite-react"
 import React, { useState } from "react"
-import {
-    HiChevronLeft,
-    HiChevronRight,
-    HiCog,
-    HiDocumentDownload,
-    HiDotsVertical,
-    HiExclamationCircle,
-    HiHome,
-    HiOutlineExclamationCircle,
-    HiOutlinePencilAlt,
-    HiPlus,
-    HiTrash,
-    HiUpload
-} from "react-icons/hi";
+import { HiUpload } from "react-icons/hi";
 import { addUser } from "../../api/apiServices";
 
 export default function AddUser({data, setData}) {
-  const [fullname, setFullname] = useState("");
-  const [email, setEmail] = useState("");
-  const [gender, setGender] = useState("");
-  const [permission, setPermission] = useState("");
-  const [department, setDepartment] = useState("");
-  const [password, setPassword] = useState("")
   const [image, setImage] = useState("");
+
+  const [user, setUser] = useState({
+    fullname: "",
+    email: "",
+    gender: "",
+    password: "",
+    permission: "",
+    department: ""
+  });
+
+  const handleChangeInput = (e) => {
+    let {name, value} = e.target;
+    setUser({...user, [name]: value})
+  }
+
   const [show, setShow] = useState(false);
   const imageChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -69,15 +65,15 @@ export default function AddUser({data, setData}) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     const formData = new FormData();
-    formData.append("fullname", fullname);
-    formData.append("email", email);
-    formData.append("gender", gender);
-    formData.append("password", password);
-    formData.append("permission", permission);
-    formData.append("department", department);
+    formData.append("fullname", user.fullname);
+    formData.append("email", user.email);
+    formData.append("gender", user.gender);
+    formData.append("password", user.password);
+    formData.append("permission", user.permission);
+    formData.append("department", user.department);
     formData.append("image", image);
+
 
     return await addUser(formData)
       .then(res => {
@@ -137,13 +133,15 @@ export default function AddUser({data, setData}) {
           <div class="relative p-4">
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div>
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="fullname">Name</Label>
                 <div className="mt-1">
                       <TextInput
-                      id="name"
-                      name="name"
+                      id="fullname"
+                      name="fullname"
+                      type="text"
                       placeholder="Ariana Grande"
-                      onChange={(e) => setFullname(e.target.value)}
+                      value={user.fullname}
+                      onChange={handleChangeInput}
                       />
                 </div>
               </div>
@@ -153,8 +151,10 @@ export default function AddUser({data, setData}) {
                     <TextInput 
                       id="password" 
                       name="password" 
+                      type="text"
                       placeholder="123123213" 
-                      onChange={(e) => setPassword(e.target.value)}
+                      value={user.password}
+                      onChange={handleChangeInput}
                       />
                 </div>
               </div>
@@ -166,7 +166,8 @@ export default function AddUser({data, setData}) {
                     name="email"
                     placeholder="example@company.com"
                     type="email"
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={user.email}
+                    onChange={handleChangeInput}
                     />
                 </div>
               </div>
@@ -176,7 +177,8 @@ export default function AddUser({data, setData}) {
                     <Select
                       id="gender"
                       name="gender"
-                      onChange={(e) => setGender(e.target.value)}
+                      value={user.gender}
+                      onChange={handleChangeInput}
                     >
                         <option>Female</option>
                         <option>Male</option>
@@ -189,7 +191,8 @@ export default function AddUser({data, setData}) {
                   <Select
                     id="department"
                     name="department"
-                    onChange={(e) => setDepartment(e.target.value)}
+                    value={user.department}
+                    onChange={handleChangeInput}
                   >
                     <option>A</option>
                     <option>B</option>
@@ -203,7 +206,8 @@ export default function AddUser({data, setData}) {
                   <Select
                     id="permission"
                     name="permission"
-                    onChange={(e) => setPermission(e.target.value)}
+                    value={user.permission}
+                    onChange={handleChangeInput}
                   >
                     <option>Staff</option>
                     <option>QA</option>

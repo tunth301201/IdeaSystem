@@ -11,20 +11,27 @@ import {
 } from "flowbite-react";
 import { updateTag } from "../../api/apiServices";
 
-export default function EditTag(props){
+export default function EditTag({data, setData}){
+  
+  console.log(data)
+
+  const handleChangeInput = (e) => {
+    let {name, value} = e.target;
+    setData({...data, [name]: value})
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     const formData = new FormData();
-    formData.append("id", props.id)
-    formData.append("subject", props.subject)
-    formData.append("description", props.description)
-    formData.append("start_dateOfTag", props.start_dateOfTag)
-    formData.append("end_dateOfTag", props.end_dateOfTag)
-    formData.append("end_dateOfIdea", props.end_dateOfIdea)
+    formData.append("id", data._id)
+    formData.append("subject", data.subject)
+    formData.append("description", data.description)
+    formData.append("start_dateOfTag", data.start_dateOfTag)
+    formData.append("end_dateOfTag", data.end_dateOfTag)
+    formData.append("end_dateOfIdea", data.end_dateOfIdea)
 
-    return updateTag(props.id, formData)
+    return updateTag(data._id, formData)
       .then(res => {
         console.log(res)
       })
@@ -77,53 +84,56 @@ export default function EditTag(props){
               </div>
               <div class="relative overflow-y-auto p-4">
                 <form onSubmit={handleSubmit}>
-                  <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                  <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                     <div>
                       <Label htmlFor="subject">Subject</Label>
                       <TextInput
                         id="subject"
                         name="subject"
+                        type="text"
                         placeholder='Famous'
                         className="mt-1"
-                        type="name"
-                        value={props.subject}
-                        onChange={(e) => props.changeSub(e.target.value)}
+                        value={data.subject}
+                        onChange={handleChangeInput}
                       />
+                      {/* <p class="mt-1 text-sm text-green-600 dark:text-green-500"> 
+                        Username available!
+                      </p> */}
                     </div>
                     <div>
-                      <Label htmlFor="ideaenddate">Idea's end date</Label>
+                      <Label htmlFor="end_dateOfIdea">Idea's end date</Label>
                       <TextInput
-                        id="ideaenddate"
-                        name="ideaenddate"
+                        id="end_dateOfIdea"
+                        name="end_dateOfIdea"
                         type="date"
                         placeholder="mm/dd/yyyy"
                         className="mt-1"
-                        value={props.end_dateOfIdea}
-                        onChange={(e) => props.changeEDI(e.target.value)}
+                        value={data.end_dateOfIdea}
+                        onChange={handleChangeInput}
                       />
                     </div>
                     <div>
-                      <Label htmlFor="startdate">Start date</Label>
+                      <Label htmlFor="start_dateOfTag">Start date</Label>
                       <TextInput
-                        id="startdate"
-                        name="startdate"
+                        id="start_dateOfTag"
+                        name="start_dateOfTag"
                         type="date"
                         placeholder="mm/dd/yyyy"
                         className="mt-1"
-                        value={props.start_dateOfTag}
-                        onChange={(e) => props.changeSDT(e.target.value)}
+                        value={data.start_dateOfTag}
+                        onChange={handleChangeInput}
                       />
                     </div>
                     <div>
-                      <Label htmlFor="enddate">End date</Label>
+                      <Label htmlFor="end_dateOfTag">End date</Label>
                       <TextInput
-                        id="enddate"
-                        name="enddate"
+                        id="end_dateOfTag"
+                        name="end_dateOfTag"
                         type="date"
                         placeholder="mm/dd/yyyy"
                         className="mt-1"
-                        value={props.end_dateOfTag}
-                        onChange={(e) => props.changeEDT(e.target.value)}
+                        value={data.end_dateOfTag}
+                        onChange={handleChangeInput}
                       />
                     </div>
                     <div className="lg:col-span-2">
@@ -134,8 +144,8 @@ export default function EditTag(props){
                         placeholder="Old topic"
                         rows={6}
                         className="mt-1"
-                        value={props.description}
-                        onChange={(e) => props.changeDes(e.target.value)}
+                        value={data.description}
+                        onChange={handleChangeInput}
                       />
                     </div>
                   </div>
