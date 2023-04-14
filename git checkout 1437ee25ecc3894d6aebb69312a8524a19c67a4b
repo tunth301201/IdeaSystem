@@ -1,0 +1,65 @@
+[33mcommit 1437ee25ecc3894d6aebb69312a8524a19c67a4b[m[33m ([m[1;36mHEAD -> [m[1;32mtest[m[33m)[m
+Author: nguyenvo811 <nguyenvo709@gmail.com>
+Date:   Fri Apr 14 17:59:18 2023 +0700
+
+    changing something to suitable the front_end
+
+[33mcommit c891c83c14c69c9208547590f73873b4515240b0[m
+Author: zocabulapo <zocabulapo@gmail.com>
+Date:   Wed Apr 5 10:15:28 2023 +0700
+
+    CheckUserID reply comment
+
+[33mcommit 3eb1d62e7d0a087416f59ed4d319048bdeaab000[m
+Author: zocabulapo <zocabulapo@gmail.com>
+Date:   Mon Apr 3 18:00:22 2023 +0700
+
+    Update Route
+
+[33mcommit 816efd9258dcfcb2285cfa601593c576ff8c0b5d[m
+Author: zocabulapo <zocabulapo@gmail.com>
+Date:   Fri Mar 31 03:53:29 2023 +0700
+
+    Update .gitignore
+
+[33mcommit 90339ed846833afccef0448deacbe3c4cfae80bb[m
+Author: zocabulapo <zocabulapo@gmail.com>
+Date:   Fri Mar 31 03:13:05 2023 +0700
+
+    Create .env
+
+[33mcommit fc5f2e1f7a97695e0382edd0eaba855df0a4103d[m
+Author: Selina <tunth301201@gmail.com>
+Date:   Thu Mar 30 17:27:43 2023 +0700
+
+    Authorization
+
+[33mcommit 2c1723ca3f9224cd9f02f81cca900e5e625a4856[m
+Author: Selina <tunth301201@gmail.com>
+Date:   Thu Mar 16 18:07:33 2023 +0700
+
+    rating idea (no test) +increase view_time of an idea
+
+[33mcommit f99cd3136b9a26c354ef01d9142fac7bfec0134e[m
+Author: Selina <tunth301201@gmail.com>
+Date:   Wed Mar 15 21:12:20 2023 +0700
+
+    CRUD Idea (not test)
+
+[33mcommit b9ad47caeadc55c9a1b08aa385c62c659a633a7e[m
+Author: Selina <tunth301201@gmail.com>
+Date:   Mon Mar 13 19:48:26 2023 +0700
+
+    CRUD User
+
+[33mcommit ea6d2c8c107fc6c2ecc3aa78cc59e3bdedc214fa[m
+Author: Selina <tunth301201@gmail.com>
+Date:   Mon Mar 13 17:25:18 2023 +0700
+
+    connect to mongo db atlas
+
+[33mcommit eadd8fb236da387e903b56990d185d12dd88a8e0[m
+Author: Selina <tunth301201@gmail.com>
+Date:   Mon Mar 13 16:24:30 2023 +0700
+
+    initital Idea System by NodeJS
