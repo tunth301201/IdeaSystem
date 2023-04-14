@@ -1,20 +1,50 @@
 import { React, useState } from "react";
-
 import { Label, Textarea, TextInput } from "flowbite-react";
-import * as te from 'tw-elements';
+import { addTag } from "../../api/apiServices";
+import { useCallback } from "react";
+import { useEffect } from "react";
 
-export default function AddTag() {
+
+export default function AddTag({user_id, data, setData}) {
+  const [subject, setSubject] = useState("")
+  const [description, setDescription] = useState("")
+  const [start_dateOfTag, setStart_dateOfTag] = useState("")
+  const [end_dateOfTag, setEnd_dateOfTag] = useState("")
+  const [end_dateOfIdea, setEnd_dateOfIdea] = useState("")
+
+  // const [error, setError] = useState({
+  //   subject: "",
+  //   description: "",
+  //   start_dateOfTag: "",
+  //   end_dateOfTag: "",
+  //   end_dateOfIdea: ""
+  // });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("subject", subject)
+    formData.append("description", description)
+    formData.append("start_dateOfTag", start_dateOfTag)
+    formData.append("end_dateOfTag", end_dateOfTag)
+    formData.append("end_dateOfIdea", end_dateOfIdea)
+    formData.append("user_id", user_id)
+
+    await addTag(formData)
+      .then(res => {
+        console.log(res)
+        data.push(res);
+        setData([...data])
+      })
+      .catch((err)=>{
+          console.log(err)
+      })  
+  }
+
+
     return (
       <>
-        {/* <span
-          type="button"
-          class="cursor inline-block rounded px-6 pt-2.5 pb-2 text-blue-700"
-          data-te-toggle="modal"
-          data-te-target="#exampleModalScrollable"
-          data-te-ripple-init
-          data-te-ripple-color="light">
-          <i class="gg-add-r"></i>
-        </span> */}
         <div
           data-te-modal-init
           class="fixed top-0 left-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-non bg-gray-900 bg-opacity-50 dark:bg-opacity-80"
@@ -56,7 +86,7 @@ export default function AddTag() {
                 </button>
               </div>
               <div class="relative overflow-y-auto p-4">
-                <form>
+                <form onSubmit={handleSubmit}>
                   <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                     <div>
                       <Label htmlFor="subject">Subject</Label>
@@ -65,7 +95,11 @@ export default function AddTag() {
                         name="subject"
                         placeholder='Famous'
                         className="mt-1"
+                        onChange={(e) => setSubject(e.target.value)}
                       />
+                      {/* <p class="mt-1 text-sm text-green-600 dark:text-green-500"> 
+                        Username available!
+                      </p> */}
                     </div>
                     <div>
                       <Label htmlFor="ideaenddate">Idea's end date</Label>
@@ -75,6 +109,7 @@ export default function AddTag() {
                         type="date"
                         placeholder="mm/dd/yyyy"
                         className="mt-1"
+                        onChange={(e) => setEnd_dateOfIdea(e.target.value)}
                       />
                     </div>
                     <div>
@@ -85,6 +120,7 @@ export default function AddTag() {
                         type="date"
                         placeholder="mm/dd/yyyy"
                         className="mt-1"
+                        onChange={(e) => setStart_dateOfTag(e.target.value)}
                       />
                     </div>
                     <div>
@@ -95,6 +131,7 @@ export default function AddTag() {
                         type="date"
                         placeholder="mm/dd/yyyy"
                         className="mt-1"
+                        onChange={(e) => setEnd_dateOfTag(e.target.value)}
                       />
                     </div>
                     <div className="lg:col-span-2">
@@ -105,6 +142,7 @@ export default function AddTag() {
                         placeholder="Old topic"
                         rows={6}
                         className="mt-1"
+                        onChange={(e) => setDescription(e.target.value)}
                       />
                     </div>
                   </div>
@@ -121,10 +159,12 @@ export default function AddTag() {
                   Close
                 </button>
                 <button
-                  type="button"
+                  type="submit"
                   class="pb-2 uppercase text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
                   data-te-ripple-init
-                  data-te-ripple-color="light">
+                      
+                  data-te-ripple-color="light"
+                  onClick={handleSubmit}>
                   Confirm
                 </button>
               </div>

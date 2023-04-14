@@ -59,16 +59,16 @@
   align-items: center;
 } */
 
-.cursor {
+/* .cursor {
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
 
 .cursor:hover {
   transform: scale(1.1);
-}
+} */
 
-.font-nm{
+/* .font-nm{
   font-weight: 400 !important;
 }
 
@@ -85,4 +85,4 @@
 .font-semi {
   font-weight: 600 !important;
   font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
-}
+} */

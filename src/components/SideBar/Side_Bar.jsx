@@ -1,22 +1,13 @@
 import React, {useState} from "react";
-import 'flowbite';
 import { Link, useLocation } from "react-router-dom";
 import {
     HiChartPie,
-    HiClipboard,
-    HiCollection,
-    HiInformationCircle,
-    HiSearch,
     HiUsers,
     HiLightBulb,
     HiTag
   } from "react-icons/hi";
-import { TagIcon } from "@heroicons/react/24/outline";
 export default function Side_Bar() {
     const location = useLocation();
-    const [isClick, setIsClick] = useState(false)
-    const handleClick = () => setIsClick(!isClick)
-
     const data = [
         {
             icon: <HiChartPie size='1.3rem'/>,
@@ -47,7 +38,7 @@ export default function Side_Bar() {
             { val.path === location.pathname 
                 ? "bg-gray-100 dark:bg-gray-700" 
                 : ""
-            } onClick={handleClick}>
+            } >
                 <Link to={val.path} key={index}>
                     <a className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                         <svg aria-hidden="true" className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">

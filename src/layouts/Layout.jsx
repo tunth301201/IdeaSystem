@@ -2,7 +2,6 @@ import { Outlet } from "react-router-dom";
 import React from "react";
 import Navigation from "../components/NavBar/Navigation";
 import Side_Bar from "../components/SideBar/Side_Bar";
-import 'flowbite';
 import { Footer } from "flowbite-react"
 import { MdFacebook } from "react-icons/md"
 import { FaDribbble, FaGithub, FaInstagram, FaTwitter } from "react-icons/fa"

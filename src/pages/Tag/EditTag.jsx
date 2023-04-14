@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import {
     Breadcrumb,
     Button,
@@ -8,9 +8,31 @@ import {
     Table,
     Textarea,
     TextInput
-  } from "flowbite-react";
+} from "flowbite-react";
+import { updateTag } from "../../api/apiServices";
 
-export default function EditTag(){
+export default function EditTag(props){
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData();
+    formData.append("id", props.id)
+    formData.append("subject", props.subject)
+    formData.append("description", props.description)
+    formData.append("start_dateOfTag", props.start_dateOfTag)
+    formData.append("end_dateOfTag", props.end_dateOfTag)
+    formData.append("end_dateOfIdea", props.end_dateOfIdea)
+
+    return updateTag(props.id, formData)
+      .then(res => {
+        console.log(res)
+      })
+      .catch((err)=>{
+          console.log(err)
+      })  
+  }
+  
     return (
       <>
         <div
@@ -54,8 +76,8 @@ export default function EditTag(){
                 </button>
               </div>
               <div class="relative overflow-y-auto p-4">
-                <form>
-                  <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                <form onSubmit={handleSubmit}>
+                  <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                     <div>
                       <Label htmlFor="subject">Subject</Label>
                       <TextInput
@@ -63,6 +85,9 @@ export default function EditTag(){
                         name="subject"
                         placeholder='Famous'
                         className="mt-1"
+                        type="name"
+                        value={props.subject}
+                        onChange={(e) => props.changeSub(e.target.value)}
                       />
                     </div>
                     <div>
@@ -73,6 +98,8 @@ export default function EditTag(){
                         type="date"
                         placeholder="mm/dd/yyyy"
                         className="mt-1"
+                        value={props.end_dateOfIdea}
+                        onChange={(e) => props.changeEDI(e.target.value)}
                       />
                     </div>
                     <div>
@@ -83,6 +110,8 @@ export default function EditTag(){
                         type="date"
                         placeholder="mm/dd/yyyy"
                         className="mt-1"
+                        value={props.start_dateOfTag}
+                        onChange={(e) => props.changeSDT(e.target.value)}
                       />
                     </div>
                     <div>
@@ -93,6 +122,8 @@ export default function EditTag(){
                         type="date"
                         placeholder="mm/dd/yyyy"
                         className="mt-1"
+                        value={props.end_dateOfTag}
+                        onChange={(e) => props.changeEDT(e.target.value)}
                       />
                     </div>
                     <div className="lg:col-span-2">
@@ -103,6 +134,8 @@ export default function EditTag(){
                         placeholder="Old topic"
                         rows={6}
                         className="mt-1"
+                        value={props.description}
+                        onChange={(e) => props.changeDes(e.target.value)}
                       />
                     </div>
                   </div>
@@ -122,7 +155,9 @@ export default function EditTag(){
                   type="button"
                   class="pb-2 uppercase text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
                   data-te-ripple-init
-                  data-te-ripple-color="light">
+                  data-te-modal-dismiss
+                  data-te-ripple-color="light"
+                  onClick={handleSubmit}>
                   Confirm
                 </button>
               </div>
