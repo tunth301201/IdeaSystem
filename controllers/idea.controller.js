@@ -1,4 +1,4 @@
-const Idea = require('../models/Idea');
+const Idea = require('../models/idea');
 
 // Get all ideas
 const getIdeas = async (req, res) => {
