@@ -17,7 +17,6 @@ import {
 import AddUser from "./AddUser";
 import DeleteUser from "./Delete";
 import EditUser from "./EditUser";
-import RenderImg from "./RenderImg";
 import { getUsers, deleteUser } from "../../api/apiServices";
   
 export default function UserPage() {
@@ -72,6 +71,9 @@ const AllUsersTable = function() {
   const [editRow, setEditRow] = useState("")
   const [row, setRow] = useState("");
   const [data, setData] = useState("");
+  const [showEdit, setShowEdit] = useState(false);
+  const [showAdd, setShowAdd] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
 
   const handleDelete = useCallback(async (row) => {
     await deleteUser(row.original._id)
@@ -176,55 +178,53 @@ const AllUsersTable = function() {
         renderRowActions={({ row, table }) => (
           <Box sx={{ display: 'flex', gap: '1rem' }}>
             <Tooltip arrow placement="left" title="Edit"
-              onClick={() => { return setData(row.original), setEditRow(row)}}>
+              onClick={() => { return setData(row.original), setEditRow(row), setShowEdit(true)}}>
               <IconButton> 
-                <span
+                <button
                   type="button"
-                  className="cursor text-blue-700"
-                  data-te-toggle="modal"
-                  data-te-target="#exampleModalCenterEditUser"
-                  data-te-ripple-init
-                  data-te-ripple-color="light">
+                  className="cursor text-blue-700">
                   <HiPencilAlt size='1.5rem'/>
-                </span>
+                </button>
               </IconButton>
             </Tooltip>
             <Tooltip arrow placement="right" title="Delete">
-              <IconButton color="error" onClick={() => {return setRow(row)}}>
-                <span
+              <IconButton color="error" onClick={() => {return setRow(row), setShowDelete(true)}}>
+                <button
                   type="button"
-                  className="cursor text-red-700"
-                  data-te-toggle="modal"
-                  data-te-target="#exampleModalCenterDeleteUser"
-                  data-te-ripple-init
-                  data-te-ripple-color="light">
+                  className="cursor text-red-700">
                   <HiTrash size='1.5rem' />
-                </span>
+                </button>
               </IconButton>
             </Tooltip>
           </Box>
         )}
         renderTopToolbarCustomActions={() => (
-          <span
+          <button
             type="button"
             className="cursor inline-block rounded px-3 pt-2.5 pb-2 text-blue-700"
-            data-te-toggle="modal"
-            data-te-target="#exampleModalCenter"
-            data-te-ripple-init
-            data-te-ripple-color="light">
+            onClick={() => setShowAdd(true)}>
             <i className="gg-add-r"></i>
-          </span>
+          </button>
         )}
       />
-      <AddUser data={tableData} setData={setTableData} />
+      <AddUser 
+        show={showAdd}
+        onClose={() => setShowAdd(false)}
+        data={tableData} 
+        setData={setTableData} />
       <EditUser 
+        show={showEdit}
+        onClose={() => setShowEdit(false)}
         data={data}
         setData={setData}
         tableData={tableData}
         setTableData={setTableData}
         editRow={editRow}
       />
-      <DeleteUser handleDelete={() => handleDelete(row)}/>
+      <DeleteUser 
+        show={showDelete}
+        onClose={() => setShowDelete(false)}
+        handleDelete={() => handleDelete(row)}/>
     </>
   )
 }

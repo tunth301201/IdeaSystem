@@ -3,20 +3,16 @@ import { React, useState } from "react";
 import { Label, Textarea, TextInput } from "flowbite-react";
 import * as te from 'tw-elements';
 
-export default function ViewIdea({data}) {
+export default function ViewIdea({show, onClose, data}) {
 
-    return (
-      <>
+  return (
+    <>
+      {show? 
         <div
-          data-te-modal-init
-          class="fixed top-0 left-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none bg-gray-900 bg-opacity-50 dark:bg-opacity-80"
-          id="exampleModalLg"
-          tabindex="-1"
-          aria-labelledby="exampleModalLgLabel"
-          aria-hidden="true">
+          class="fixed top-0 left-0 z-[1055] h-full w-full overflow-y-auto overflow-x-hidden outline-none bg-gray-900 bg-opacity-50 dark:bg-opacity-80"
+          id="exampleModalLg">
           <div
-            data-te-modal-dialog-ref
-            class="pointer-events-none flex min-h-[calc(100%-1rem)] items-center relative w-auto translate-y-[-50px] opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[500px] min-[992px]:max-w-[800px]">
+            class="flex min-h-[calc(100%-1rem)] items-center relative w-auto transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[500px] min-[992px]:max-w-[800px]">
             <div
               class="pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-lg outline-none dark:bg-neutral-600">
               <div
@@ -29,8 +25,7 @@ export default function ViewIdea({data}) {
                 <button
                   type="button"
                   class="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
-                  data-te-modal-dismiss
-                  aria-label="Close">
+                  onClick={() => onClose()}>
                   <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -151,15 +146,14 @@ export default function ViewIdea({data}) {
                 <button
                   type="button"
                   class="pb-2 uppercase text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"
-                  data-te-modal-dismiss
-                  data-te-ripple-init
-                  data-te-ripple-color="light">
+                  onClick={() => onClose()}>
                   Close
                 </button>
               </div>
             </div>
           </div>
         </div>
-      </>
-    )
-  }
+      : null}
+    </>
+  )
+}

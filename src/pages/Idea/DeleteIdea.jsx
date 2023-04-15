@@ -4,18 +4,12 @@ import { HiOutlineExclamationCircle, HiTrash } from "react-icons/hi"
 function DeleteIdea(props){  
     return (
       <>
-        <div
-          data-te-modal-init
-          class="fixed top-0 left-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-non bg-gray-900 bg-opacity-50 dark:bg-opacity-80"
-          id="exampleModalCenter"
-          tabindex="-1"
-          data-te-backdrop="static"
-          data-te-keyboard="false"
-          aria-labelledby="exampleModalCenterTitle"
-          aria-hidden="true">
+        {props.show? 
           <div
-            data-te-modal-dialog-ref
-            class="pointer-events-none relative flex min-h-[calc(100%-1rem)] w-auto translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[500px]">
+          class="fixed top-0 left-0 z-[1055] h-full w-full overflow-y-auto overflow-x-hidden outline-non bg-gray-900 bg-opacity-50 dark:bg-opacity-80"
+          id="exampleModalCenter">
+          <div
+            class="pointer-events-none relative flex min-h-[calc(100%-1rem)] w-auto translate-y-[-50px] items-center transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[500px]">
             <div
               class="pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-lg outline-none dark:bg-neutral-600">
               <div
@@ -27,8 +21,7 @@ function DeleteIdea(props){
                 <button
                   type="button"
                   class="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
-                  data-te-modal-dismiss
-                  aria-label="Close">
+                  onClick={() => props.onClose()}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -53,9 +46,7 @@ function DeleteIdea(props){
                     <button
                     type="button"
                     class="pb-2 uppercase text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"
-                    data-te-modal-dismiss
-                    data-te-ripple-init
-                    data-te-ripple-color="light">
+                    onClick={() => props.onClose()}>
                     Close
                     </button>
                     <button
@@ -63,7 +54,7 @@ function DeleteIdea(props){
                       class="pb-2 uppercase text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
                       data-te-ripple-init
                       data-te-ripple-color="light"
-                      onClick={() => props.handleDelete()}>
+                      onClick={() => {return props.handleDelete(), props.onClose()}}>
                       Confirm
                     </button>
                   </div>
@@ -72,6 +63,7 @@ function DeleteIdea(props){
             </div>
           </div>
         </div>
+        : null}
       </>
     )
   }

@@ -71,6 +71,8 @@ const IdeaTable = function() {
   const [validationErrors, setValidationErrors] = useState({});
   const [data, setData] = useState("")
   const [row, setRow] = useState("");
+  const [showView, setShowView] = useState(false)
+  const [showDelete, setShowDelete] = useState(false)
 
   const handleDelete = useCallback(async (row) => {
     await deleteIdea(row.original._id)
@@ -164,27 +166,19 @@ const IdeaTable = function() {
         renderRowActions={({ row, table }) => (
           <Box sx={{ display: 'flex', gap: '1rem' }}>
             <Tooltip arrow placement="left" title="View">
-              <IconButton onClick={() => {return setData(row.original)}}>
+              <IconButton onClick={() => {return setData(row.original), setShowView(true)}}>
                 <button
                   type="button"
-                  class="cursor text-blue-700"
-                  data-te-toggle="modal"
-                  data-te-target="#exampleModalLg"
-                  data-te-ripple-init
-                  data-te-ripple-color="light">
+                  class="cursor text-blue-700">
                   <HiEye size='1.5rem' />
                 </button> 
               </IconButton>
             </Tooltip>
             <Tooltip arrow placement="right" title="Delete">
-              <IconButton onClick={() => {return setRow(row)}}>
+              <IconButton onClick={() => {return setRow(row), setShowDelete(true)}}>
                 <button
                   type="button"
-                  class="cursor text-red-700"
-                  data-te-toggle="modal"
-                  data-te-target="#exampleModalCenter"
-                  data-te-ripple-init
-                  data-te-ripple-color="light">
+                  class="cursor text-red-700">
                   <HiTrash size='1.5rem' />
                 </button> 
               </IconButton>
@@ -201,8 +195,14 @@ const IdeaTable = function() {
         //   </Button>
         // )}
       />
-      <DeleteIdea handleDelete={() => handleDelete(row)}/>
-      <ViewIdea data={data} />
+      <DeleteIdea 
+        show={showDelete}
+        onClose={() => setShowDelete(false)}
+        handleDelete={() => handleDelete(row)}/>
+      <ViewIdea 
+        show={showView}
+        onClose={() => setShowView(false)}
+        data={data} />
     </>
   );
 }

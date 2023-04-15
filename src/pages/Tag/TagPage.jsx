@@ -62,10 +62,13 @@ export default function TagPage() {
   const [editRow, setEditRow] = useState("")
   const [row, setRow] = useState("");
   const [data, setData] = useState("");
+  const [showEdit, setShowEdit] = useState(false);
+  const [showAdd, setShowAdd] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
 
   useEffect(() => {
     if (decodeJwt().id !== "") {
-      setUser_id(decodeJwt()?.id)
+      setUser_id(decodeJwt().id)
     }
     getAllTags()
       .then(res => {
@@ -105,7 +108,7 @@ export default function TagPage() {
       // }),
     },
     {
-      accessorKey: 'start_dateOfTag',
+      accessorFn: (originalRow) => formatDateTimeDislay(originalRow.start_dateOfTag),
       header: `Tag's start date`,
       size: 140,
       // muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
@@ -113,7 +116,7 @@ export default function TagPage() {
       // }),
     },
     {
-      accessorKey: 'end_dateOfTag',
+      accessorFn: (originalRow) => formatDateTimeDislay(originalRow.end_dateOfTag),
       header: `Tag's end date`,
       // muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
       //   ...getCommonEditTextFieldProps(cell),
@@ -121,7 +124,7 @@ export default function TagPage() {
       // }),
     },
     {
-      accessorKey: 'end_dateOfIdea',
+      accessorFn: (originalRow) => formatDateTimeDislay(originalRow.end_dateOfIdea),
       header: `Idea's end date`,
       size: 80,
       // muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
@@ -162,27 +165,21 @@ export default function TagPage() {
         renderRowActions={({ row, table }) => (
           <Box sx={{ display: 'flex', gap: '1rem' }}>
             <Tooltip arrow placement="left" title="Edit">
-              <IconButton onClick={() => {return setData(row.original), setEditRow(row)}}> 
+              <IconButton onClick={() => {return setData(row.original), setEditRow(row), setShowEdit(true)}}> 
                 <button
                   type="button"
                   class="text-blue-700"
-                  data-te-toggle="modal"
-                  data-te-target="#exampleModalScrollableEdit"
-                  data-te-ripple-init
-                  data-te-ripple-color="light">
+                  >
                   <HiPencilAlt size='1.5rem'/>
                 </button>
               </IconButton>
             </Tooltip>
             <Tooltip arrow placement="right" title="Delete">
-              <IconButton color="error" onClick={() => {return setRow(row)}}>
+              <IconButton color="error" onClick={() => {return setRow(row), setShowDelete(true)}}>
                 <button
                   type="button"
                   class="text-red-700"
-                  data-te-toggle="modal"
-                  data-te-target="#exampleModalCenterDelete"
-                  data-te-ripple-init
-                  data-te-ripple-color="light">
+                  >
                   <HiTrash size='1.5rem' />
                 </button>
               </IconButton>
@@ -193,10 +190,7 @@ export default function TagPage() {
           <button
             type="button"
             class="inline-block rounded px-3 pt-2.5 pb-2 text-blue-700"
-            data-te-toggle="modal"
-            data-te-target="#exampleModalScrollable"
-            data-te-ripple-init
-            data-te-ripple-color="light">
+            onClick={() => setShowAdd(true)}>
             <i class="gg-add-r"></i>
           </button>
         )}
@@ -204,15 +198,40 @@ export default function TagPage() {
       <AddTag 
         data={tableData}
         setData={setTableData}
-        user_id={user_id}/>
+        user_id={user_id}
+        show={showAdd}
+        onClose={() => setShowAdd(false)}
+        />
       <EditTag 
+        show={showEdit}
+        onClose={() => setShowEdit(false)}
         data={data}
         setData={setData}
         tableData={tableData}
         setTableData={setTableData}
         editRow={editRow}
       />
-      <DeleteTag handleDelete={() => handleDelete(row)}/>
+      <DeleteTag 
+        show={showDelete}
+        onClose={() => setShowDelete(false)}
+        handleDelete={() => handleDelete(row)}/>
     </>
   )
+}
+
+const formatDateTimeDislay = (inputString) => {
+        // Convert input string to JavaScript Date object
+  var date = new Date(inputString);
+
+        // Extract individual components (year, month, day, hours, minutes, seconds) from the Date object
+  var year = date.getFullYear();
+  var month = ("0" + (date.getMonth() + 1)).slice(-2); // Months are zero-indexed, so we add 1 and pad with leading zero
+  var day = ("0" + date.getDate()).slice(-2); // Pad with leading zero
+  var hours = ("0" + date.getHours()).slice(-2); // Pad with leading zero
+  var minutes = ("0" + date.getMinutes()).slice(-2); // Pad with leading zero
+  var seconds = ("0" + date.getSeconds()).slice(-2); // Pad with leading zero
+        // Format the date and time components into a user-friendly string
+  var formattedDateTime = day + "/" + month + "/" + year + " " + hours + ":" + minutes + ":" + seconds;
+        // Return the formatted date and time string
+  return formattedDateTime;
 }
