@@ -7,19 +7,11 @@ import DeleteIdea from "./DeleteIdea";
 import MaterialReactTable from 'material-react-table';
 import {
   Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   IconButton,
-  MenuItem,
-  Stack,
-  TextField,
   Tooltip,
 } from '@mui/material';
 import ViewIdea from "./ViewIdea";
-import { deleteIdea, getAllIdeas } from "../../api/apiServices";
+import { deleteIdea, getAllIdeas, getIdea } from "../../api/apiServices";
   
 export default function IdeaPage() {
   return (
@@ -69,11 +61,13 @@ const IdeaTable = function() {
   
   const [tableData, setTableData] = useState([]);
   const [validationErrors, setValidationErrors] = useState({});
-  const [data, setData] = useState("")
+  const [data, setData] = useState("");
   const [row, setRow] = useState("");
-  const [showView, setShowView] = useState(false)
-  const [showDelete, setShowDelete] = useState(false)
-  console.log(tableData)
+  const [showView, setShowView] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
+  const [ideaID, setIdeaID] = useState('')
+
+  console.log(data._id)
 
   const handleDelete = useCallback(async (row) => {
     await deleteIdea(row.original._id)
@@ -177,7 +171,7 @@ const IdeaTable = function() {
         renderRowActions={({ row, table }) => (
           <Box sx={{ display: 'flex', gap: '1rem' }}>
             <Tooltip arrow placement="left" title="View">
-              <IconButton onClick={() => {return setData(row.original), setShowView(true)}}>
+              <IconButton onClick={() => {return setData(row.original), setShowView(true), setIdeaID(row.original._id)}}>
                 <button
                   type="button"
                   class="cursor text-blue-700">
@@ -213,7 +207,8 @@ const IdeaTable = function() {
       <ViewIdea 
         show={showView}
         onClose={() => setShowView(false)}
-        data={data} />
+        data={data}
+        ideaID={ideaID} />
     </>
   );
 }
