@@ -108,6 +108,16 @@ const getAllIdeas = async () => {
     })
 }
 
+const getIdea = async (id) => {
+  return await axios.get(`http://localhost:8080/ideas/${id}`, config)
+    .then(res => {
+        return res.data
+    })
+    .catch(err => {
+        console.log(err)
+    })
+}
+
 const deleteIdea = async (id) => {
   return await axios.delete(`http://localhost:8080/ideas/${id}`, config)
     .then(res => {
@@ -130,5 +140,6 @@ export {
     deleteUser,
     updateUser,
     getAllIdeas,
-    deleteIdea
+    deleteIdea,
+    getIdea
 }

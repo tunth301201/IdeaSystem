@@ -73,6 +73,7 @@ const IdeaTable = function() {
   const [row, setRow] = useState("");
   const [showView, setShowView] = useState(false)
   const [showDelete, setShowDelete] = useState(false)
+  console.log(tableData)
 
   const handleDelete = useCallback(async (row) => {
     await deleteIdea(row.original._id)
@@ -101,35 +102,45 @@ const IdeaTable = function() {
   const columns = useMemo(
     () => [
       {
-        accessorKey: 'tag_id',
-        header: 'Tag',
+        accessorKey: "title",
+        header: 'Title',
         enableColumnOrdering: false,
         enableEditing: false, //disable editing on this column
         enableSorting: false,
         size: 80,
       },
       {
-        accessorKey: 'user_id',
-        header: 'User',
+        accessorFn: (originalRow) => originalRow.tag_id.subject,
+        id: 'subject',
+        header: 'Subject',
+        enableColumnOrdering: false,
+        enableEditing: false, //disable editing on this column
+        enableSorting: false,
+        size: 80,
+      },
+      {
+        accessorFn: (originalRow) => originalRow.user_id.fullname,
+        id: 'fullname',
+        header: 'User Name',
         size: 140,
         // muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
         //   ...getCommonEditTextFieldProps(cell),
         // }),
       },
       {
-        accessorKey: 'title',
-        header: 'Title',
+        accessorKey: 'like',
+        header: 'Like',
         size: 140,
         // muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
         //   ...getCommonEditTextFieldProps(cell),
         // }),
       },
       {
-        accessorKey: 'content',
-        header: 'Content',
+        accessorKey: 'dislike',
+        header: 'Dislike',
+        size: 140,
         // muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
         //   ...getCommonEditTextFieldProps(cell),
-        //   type: 'email',
         // }),
       },
       {

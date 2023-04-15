@@ -1,10 +1,19 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 
 import { Label, Textarea, TextInput } from "flowbite-react";
-import * as te from 'tw-elements';
+import { getIdea } from "../../api/apiServices";
 
 export default function ViewIdea({show, onClose, data}) {
-
+  // const [ideaFiles, setIdeaFiles] = useState([])
+  // useEffect(() => {
+  //    getIdea(data._id)
+  //     .then(res => {
+  //       console.log(res)
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
+  // })
   return (
     <>
       {show? 
@@ -51,11 +60,11 @@ export default function ViewIdea({show, onClose, data}) {
                         placeholder='#'
                         readOnly
                         className="mt-1"
-                        value={data.tag_id}
+                        value={data.tag_id.subject}
                       />
                     </div>
                     <div>
-                      <Label htmlFor="user">User</Label>
+                      <Label htmlFor="user">User Name</Label>
                       <TextInput
                         id="user"
                         name="user"
@@ -63,7 +72,7 @@ export default function ViewIdea({show, onClose, data}) {
                         readOnly
                         placeholder="#"
                         className="mt-1"
-                        value={data.user_id}
+                        value={data.user_id.fullname}
                       />
                     </div>
                     <div>

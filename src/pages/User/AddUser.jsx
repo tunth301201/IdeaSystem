@@ -54,6 +54,8 @@ export default function AddUser({data, setData, show, onClose}) {
       msg.password = "Password field is required!"
     } else if (user.password.length < 6) { 
       msg.password = "Password must be greater than 6!"
+    } else if (user.password  ) {
+
     } if (user.permission === "") {
       msg.permission = "Permission field is required!"
     } if (user.department === "") {
@@ -243,8 +245,8 @@ export default function AddUser({data, setData, show, onClose}) {
                           value={user.gender}
                           onChange={handleChangeInput}
                         >
-                            <option>Female</option>
-                            <option>Male</option>
+                          <option>Female</option>
+                          <option>Male</option>
                         </Select>
                         <p class="mt-1 text-sm text-red-500"> 
                           {error.gender}
