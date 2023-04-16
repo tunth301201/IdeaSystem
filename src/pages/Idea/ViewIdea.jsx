@@ -98,7 +98,7 @@ export default function ViewIdea({show, onClose, data, ideaID}) {
               </div>
               <div data-te-modal-body-ref class="relative overflow-y-auto p-4">
                 <form>
-                  <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                  <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                     <div>
                       <Label htmlFor="tag">Tag</Label>
                       <TextInput
@@ -135,18 +135,6 @@ export default function ViewIdea({show, onClose, data, ideaID}) {
                       />
                     </div>
                     <div>
-                      <Label htmlFor="content">Content</Label>
-                      <TextInput
-                        id="content"
-                        name="content"
-                        type="text"
-                        readOnly
-                        placeholder="#"
-                        className="mt-1"
-                        value={data.content}
-                      />
-                    </div>
-                    <div>
                       <Label htmlFor="like">Like</Label>
                       <TextInput
                         id="like"
@@ -171,11 +159,6 @@ export default function ViewIdea({show, onClose, data, ideaID}) {
                       />
                     </div>
                     <div>
-                    <Label htmlFor="documents">Documents</Label>
-                      <>{getIdeaFiles}</>
-                    </div>
-                    
-                    <div>
                       <Label htmlFor="viewtime">View time</Label>
                       <TextInput
                         id="viewtime"
@@ -185,6 +168,22 @@ export default function ViewIdea({show, onClose, data, ideaID}) {
                         placeholder="#"
                         className="mt-1"
                         value={data.view_time}
+                      />
+                    </div>
+                    <div>
+                    <Label htmlFor="documents">Documents</Label>
+                      <>{getIdeaFiles}</>
+                    </div>
+                    <div className="lg:col-span-2">
+                      <Label htmlFor="content">Content</Label>
+                      <Textarea
+                        id="content"
+                        name="content"
+                        placeholder="content"
+                        rows={6}
+                        readOnly
+                        className="mt-1"
+                        value={data.content}
                       />
                     </div>
                   </div>
