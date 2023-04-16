@@ -150,7 +150,7 @@ export default function EditTag({data, setData, tableData, setTableData, editRow
                       id="subject"
                       name="subject"
                       type="text"
-                      placeholder='Famous'
+                      placeholder='Subject'
                       className="mt-1"
                       value={data.subject}
                       onChange={handleChangeInput}
@@ -209,7 +209,7 @@ export default function EditTag({data, setData, tableData, setTableData, editRow
                     <Textarea
                       id="description"
                       name="description"
-                      placeholder="Old topic"
+                      placeholder="Description"
                       rows={6}
                       className="mt-1"
                       value={data.description}

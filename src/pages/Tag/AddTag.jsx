@@ -11,7 +11,6 @@ export default function AddTag({user_id, data, setData, show, onClose}) {
     const day = String(formattedDate.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
-
   const [tag, setTag] = useState({
     subject: "",
     description: "", 
@@ -85,7 +84,7 @@ export default function AddTag({user_id, data, setData, show, onClose}) {
     formData.append("end_dateOfTag", tag.end_dateOfTag)
     formData.append("end_dateOfIdea", tag.end_dateOfIdea)
     formData.append("user_id", user_id)
-
+    
     const isValid = validateAll()
     if (isValid){
       await addTag(formData)
@@ -146,7 +145,7 @@ export default function AddTag({user_id, data, setData, show, onClose}) {
                       id="subject"
                       name="subject"
                       type="text"
-                      placeholder='Famous'
+                      placeholder='Subject'
                       className="mt-1"
                       value={tag.subject}
                       onChange={handleChangeInput}
@@ -205,7 +204,7 @@ export default function AddTag({user_id, data, setData, show, onClose}) {
                     <Textarea
                       id="description"
                       name="description"
-                      placeholder="Old topic"
+                      placeholder="Description"
                       rows={6}
                       className="mt-1"
                       value={tag.description}

@@ -10,14 +10,9 @@ export default function Side_Bar() {
     const location = useLocation();
     const data = [
         {
-            icon: <HiChartPie size='1.3rem'/>,
-            label: "Dashboard",
-            path: "/"
-        }, 
-        {
             icon: <HiTag size='1.3rem'/>,
             label: "Tags",
-            path: "/tags"
+            path: "/"
         },
         {
             icon: <HiLightBulb size='1.4rem'/>,

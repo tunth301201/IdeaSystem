@@ -6,7 +6,8 @@ export const decodeJwt = () =>{
     if (token) {    
         try {
             const decoded = jwtDecode(token)
-            const id = decoded.data._id;
+            console.log(decoded)
+            const id = decoded.data.sub;
             const permission = decoded.data.permission;
             return {id, permission}
         } catch (err) {

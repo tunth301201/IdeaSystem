@@ -7,8 +7,8 @@ const config = {
   },
 }
 
-localStorage.setItem('Authentication', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjY0M2FlZjA3Yzk2ZTBiY2NlZDhiZTYyNCIsImVtYWlsIjoibmd1eWVudm83MDlAZ21haWwuY29tIiwiZnVsbG5hbWUiOiJWbyBDaGkgTmd1eWVuIiwiZ2VuZGVyIjoiTWFsZSIsImltYWdlIjoiZGVmYXVsdC5wbmciLCJwYXNzd29yZCI6IiQyYiQxMCRib3gzM2FkcERYS2lnVk1Md2Uwc0ZleHY3UDE4M2pNakJkU0cuQ0RuRE9kRk9PM21WVnlzSyIsImRlcGFydG1lbnQiOiJDIiwicGVybWlzc2lvbiI6IlFBTWFuYWdlciIsImNyZWF0ZWRBdCI6IjIwMjMtMDQtMTVUMTg6Mzc6NTkuNzcwWiIsInVwZGF0ZWRBdCI6IjIwMjMtMDQtMTVUMTg6Mzc6NTkuNzcwWiIsIl9fdiI6MH0sImlhdCI6MTY4MTU4MzkyNywiZXhwIjoxNjgxNjI3MTI3fQ.eLRbXz71JYst9zUqhTiIQH-nEz9W9v2OerRIMe-FMNg");
-axios.defaults.headers.common['Authorization'] = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjY0M2FlZjA3Yzk2ZTBiY2NlZDhiZTYyNCIsImVtYWlsIjoibmd1eWVudm83MDlAZ21haWwuY29tIiwiZnVsbG5hbWUiOiJWbyBDaGkgTmd1eWVuIiwiZ2VuZGVyIjoiTWFsZSIsImltYWdlIjoiZGVmYXVsdC5wbmciLCJwYXNzd29yZCI6IiQyYiQxMCRib3gzM2FkcERYS2lnVk1Md2Uwc0ZleHY3UDE4M2pNakJkU0cuQ0RuRE9kRk9PM21WVnlzSyIsImRlcGFydG1lbnQiOiJDIiwicGVybWlzc2lvbiI6IlFBTWFuYWdlciIsImNyZWF0ZWRBdCI6IjIwMjMtMDQtMTVUMTg6Mzc6NTkuNzcwWiIsInVwZGF0ZWRBdCI6IjIwMjMtMDQtMTVUMTg6Mzc6NTkuNzcwWiIsIl9fdiI6MH0sImlhdCI6MTY4MTU4MzkyNywiZXhwIjoxNjgxNjI3MTI3fQ.eLRbXz71JYst9zUqhTiIQH-nEz9W9v2OerRIMe-FMNg";
+localStorage.setItem('Authentication', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InN1YiI6IjY0M2FlZjA3Yzk2ZTBiY2NlZDhiZTYyNCIsImVtYWlsIjoibmd1eWVudm83MDlAZ21haWwuY29tIiwicGVybWlzc2lvbiI6IlFBTWFuYWdlciJ9LCJpYXQiOjE2ODE2NjcxNzMsImV4cCI6MTY4MTcxMDM3M30.fETcPT9E8cLiGYWXIckJR2fQAe5_sOa_4vEJnbLsmso");
+axios.defaults.headers.common['Authorization'] = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InN1YiI6IjY0M2FlZjA3Yzk2ZTBiY2NlZDhiZTYyNCIsImVtYWlsIjoibmd1eWVudm83MDlAZ21haWwuY29tIiwicGVybWlzc2lvbiI6IlFBTWFuYWdlciJ9LCJpYXQiOjE2ODE2NjcxNzMsImV4cCI6MTY4MTcxMDM3M30.fETcPT9E8cLiGYWXIckJR2fQAe5_sOa_4vEJnbLsmso";
 
 const addTag = async (data) => {
   return await axios.post("http://localhost:8080/tags", data, config)
@@ -111,7 +111,7 @@ const getAllIdeas = async () => {
 const getIdea = async (id) => {
   return await axios.get(`http://localhost:8080/ideas/${id}`, config)
     .then(res => {
-        return res.data
+        return res
     })
     .catch(err => {
         console.log(err)

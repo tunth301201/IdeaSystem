@@ -195,7 +195,7 @@ export default function AddUser({data, setData, show, onClose}) {
                         id="fullname"
                         name="fullname"
                         type="text"
-                        placeholder="Ariana Grande"
+                        placeholder="Your name"
                         value={user.fullname}
                         onChange={handleChangeInput}
                         />
@@ -210,8 +210,8 @@ export default function AddUser({data, setData, show, onClose}) {
                         <TextInput 
                           id="password" 
                           name="password" 
-                          type="text"
-                          placeholder="123123213" 
+                          type="password"
+                          placeholder="Your password" 
                           value={user.password}
                           onChange={handleChangeInput}
                           />
@@ -245,6 +245,7 @@ export default function AddUser({data, setData, show, onClose}) {
                           value={user.gender}
                           onChange={handleChangeInput}
                         >
+                          <option selected>---Select---</option>
                           <option>Female</option>
                           <option>Male</option>
                         </Select>
@@ -262,6 +263,7 @@ export default function AddUser({data, setData, show, onClose}) {
                           value={user.department}
                           onChange={handleChangeInput}
                         >
+                          <option selected>---Select---</option>
                           <option>A</option>
                           <option>B</option>
                           <option>C</option>
@@ -280,6 +282,7 @@ export default function AddUser({data, setData, show, onClose}) {
                           value={user.permission}
                           onChange={handleChangeInput}
                         >
+                          <option selected>---Select---</option>
                           <option>Staff</option>
                           <option>QA</option>
                           <option>QAManager</option>

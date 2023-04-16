@@ -101,17 +101,6 @@ const AllUsersTable = function() {
 
   const columns = useMemo(() => [
     {
-      accessorKey: 'image',
-      header: 'Image',
-      size: 120,
-      enableColumnOrdering: false,
-      enableEditing: false, //disable editing on this column
-      enableSorting: false,
-      // muiTableBodyCellEditTextFieldProps: ({ cell }) => ({
-      //   ...getCommonEditTextFieldProps(cell),
-      // }),
-    },
-    {
       accessorKey: 'fullname',
       header: 'Name',
       size: 80,

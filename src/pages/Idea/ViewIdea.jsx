@@ -5,22 +5,21 @@ import { getIdea } from "../../api/apiServices";
 
 export default function ViewIdea({show, onClose, data, ideaID}) {
   const [ideaFiles, setIdeaFiles] = useState("")
+
+  console.log(ideaID)
   useEffect(() => {
-    if (ideaID) {
-      console.log("Idea ID doesn't match!")
-    } else {
-      getIdea(ideaID)
+    getIdea(ideaID)
        .then(res => {
-          console.log(res)
-          setIdeaFiles(res)
+          console.log(res.data)
+          setIdeaFiles(res.data.files)
        })
        .catch(err => {
           console.log(err)
        })
-    }
-  }, [])
+  }, [data])
+  console.log(ideaFiles)
 
-  const getIdeaFiles = Object.values(ideaFiles).map((val, index) => {
+  const getIdeaFiles = Object.values(ideaFiles || {}).map((val, index) => {
     return (
       <div key={index} className="flex items-center p-3 mb-3.5 border border-gray-200 dark:border-gray-700 rounded-lg">
         <div className="flex items-center justify-center w-10 h-10 mr-3 rounded-lg bg-primary-100 dark:bg-primary-900">
@@ -40,7 +39,7 @@ export default function ViewIdea({show, onClose, data, ideaID}) {
         </div>
         <div className="mr-4">
           <p className="text-sm font-semibold text-gray-900 dark:text-white">{val.filename}</p>
-          {/* <p className="text-sm text-gray-500 dark:text-gray-400">{val.contentType.split('/')[1]}, {(val.length / (1024 * 1024)).toFixed(2)} MB</p> */}
+          <p className="text-sm text-gray-500 dark:text-gray-400">{(val.contentType.split("/")[0])}, {(val.length / (1024 * 1024)).toFixed(2)} MB</p>
         </div>
         <div className="flex items-center ml-auto">
         <button type="button" className="p-2 rounded hover:bg-gray-100">
@@ -172,18 +171,10 @@ export default function ViewIdea({show, onClose, data, ideaID}) {
                       />
                     </div>
                     <div>
-                      <Label htmlFor="documents">Documents</Label>
-                      <TextInput
-                        id="documents"
-                        name="documents"
-                        type="text"
-                        readOnly
-                        placeholder="#"
-                        className="mt-1"
-                        value={data.documents}
-                      />
+                    <Label htmlFor="documents">Documents</Label>
+                      <>{getIdeaFiles}</>
                     </div>
-                    <>{getIdeaFiles}</>
+                    
                     <div>
                       <Label htmlFor="viewtime">View time</Label>
                       <TextInput

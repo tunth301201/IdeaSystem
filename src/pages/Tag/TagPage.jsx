@@ -65,7 +65,7 @@ export default function TagPage() {
   const [showEdit, setShowEdit] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
-
+  console.log(user_id)
   useEffect(() => {
     if (decodeJwt().id !== "") {
       setUser_id(decodeJwt().id)

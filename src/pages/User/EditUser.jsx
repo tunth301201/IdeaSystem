@@ -167,8 +167,8 @@ export default function EditUser({data, setData, tableData, setTableData, editRo
                         <TextInput 
                           id="password" 
                           name="password" 
-                          type="text"
-                          placeholder="123123213" 
+                          type="password"
+                          placeholder="Your password" 
                           value={data.password}
                           onChange={handleChangeInput}
                           />
@@ -201,7 +201,8 @@ export default function EditUser({data, setData, tableData, setTableData, editRo
                           name="gender"
                           value={data.gender}
                           onChange={handleChangeInput}
-                        >
+                        > 
+                            <option selected>---Select---</option>
                             <option>Female</option>
                             <option>Male</option>
                         </Select>
@@ -219,6 +220,7 @@ export default function EditUser({data, setData, tableData, setTableData, editRo
                           value={data.department}
                           onChange={handleChangeInput}
                         >
+                          <option selected>---Select---</option>
                           <option>A</option>
                           <option>B</option>
                           <option>C</option>
@@ -237,6 +239,7 @@ export default function EditUser({data, setData, tableData, setTableData, editRo
                           value={data.permission}
                           onChange={handleChangeInput}
                         >
+                          <option selected>---Select---</option>
                           <option>Staff</option>
                           <option>QA</option>
                           <option>QAManager</option>

@@ -67,7 +67,7 @@ const IdeaTable = function() {
   const [showDelete, setShowDelete] = useState(false);
   const [ideaID, setIdeaID] = useState('')
 
-  console.log(data._id)
+  console.log(ideaID)
 
   const handleDelete = useCallback(async (row) => {
     await deleteIdea(row.original._id)
