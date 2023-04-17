@@ -128,7 +128,15 @@ const deleteIdea = async (id) => {
     })
 }
 
-
+const getIdeaByTagID = async (id) => {
+  return await axios.get(`http://localhost:8080/ideas/ideasByTag/${id}`, config)
+    .then(res => {
+        return res.data
+    })
+    .catch(err => {
+        console.log(err)
+    })
+}
 
 export {
     getAllTags,
@@ -141,5 +149,6 @@ export {
     updateUser,
     getAllIdeas,
     deleteIdea,
-    getIdea
+    getIdea,
+    getIdeaByTagID
 }

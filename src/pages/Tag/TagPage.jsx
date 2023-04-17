@@ -18,7 +18,7 @@ import {
 import AddTag from "./AddTag";
 import DeleteTag from "./DeleteTag";
 import EditTag from "./EditTag";
-import { getAllTags, deleteTag } from "../../api/apiServices";
+import { getAllTags, deleteTag, getIdeaByTagID } from "../../api/apiServices";
 import { decodeJwt } from "../../api/decodeJwt";
 
 export default function TagPage() {
@@ -65,6 +65,10 @@ export default function TagPage() {
   const [showEdit, setShowEdit] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [idea, setIdea] = useState("");
+  const [showErr, setShowErr] = useState(false)
+  const [error, setError] = useState("");
+
   useEffect(() => {
     if (decodeJwt().id !== "") {
       setUser_id(decodeJwt().id)
@@ -78,8 +82,23 @@ export default function TagPage() {
       }) 
   }, [tableData.length])
 
-  const handleDelete = useCallback(async (row) => {
-    await deleteTag(row.original._id)
+  const handleShowDelete =  (row) => {
+    setShowDelete(true)
+    console.log(row.original._id)
+     getIdeaByTagID(row.original._id)
+      .then(res => {
+        console.log(res)
+        console.log("delete: " + res.length)
+        setIdea(res.length)
+      })
+      .catch(err => {
+        console.log(err); 
+      })  
+  }
+
+  const handleDelete = (row) => {
+    if (idea === 0) {
+      deleteTag(row.original._id)
       .then((response) => { 
         tableData.splice(row.index, 1);
         setTableData([...tableData]);
@@ -87,7 +106,12 @@ export default function TagPage() {
       .catch((err)=>{
           console.log(err)
       })  
-  }, [tableData])
+      setShowDelete(false)
+    } else {
+      setShowErr(true)
+      setError("Please delete the entire ideas of this tag to delete!")
+    }
+  }
 
   const columns = useMemo(() => [
     {
@@ -174,7 +198,7 @@ export default function TagPage() {
               </IconButton>
             </Tooltip>
             <Tooltip arrow placement="right" title="Delete">
-              <IconButton color="error" onClick={() => {return setRow(row), setShowDelete(true)}}>
+              <IconButton color="error" onClick={() => {return setRow(row), handleShowDelete(row)}}>
                 <button
                   type="button"
                   class="text-red-700"
@@ -212,6 +236,9 @@ export default function TagPage() {
       />
       <DeleteTag 
         show={showDelete}
+        error={error}
+        showErr={showErr}
+        onCloseErr={() => setShowErr(false)}
         onClose={() => setShowDelete(false)}
         handleDelete={() => handleDelete(row)}/>
     </>
