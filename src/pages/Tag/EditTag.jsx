@@ -91,6 +91,7 @@ export default function EditTag({data, setData, tableData, setTableData, editRow
       await updateTag(data._id, parseData)
       .then(res => {
         console.log(res)
+        tableData.push(res);
         setTableData([...tableData]);
         clearState()
       })
